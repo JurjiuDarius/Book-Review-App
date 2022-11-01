@@ -1,7 +1,7 @@
 package view;
 
 import entity.Critic;
-
+import entity.Critic;
 import java.util.List;
 
 public class CriticView {

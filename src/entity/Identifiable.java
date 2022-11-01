@@ -1,6 +1,6 @@
 package entity;
 
-public class Identifiable {
+public abstract class Identifiable {
 	int id;
 
 	public Identifiable(int id) {
