@@ -1,6 +1,7 @@
 package controller;
 
 import entity.Book;
+import exception.BadValueException;
 import repository.Repository;
 import view.BookView;
 
@@ -11,14 +12,21 @@ public class BookController {
 	private Repository<Book> bookRepository;
 	private BookView bookView;
 
-	public BookController() {
-		bookRepository=new Repository<>();
-		bookView=new BookView();
+	public BookController(Repository<Book> repository,BookView bookView) {
+		this.bookRepository=repository;
+		this.bookView=bookView;
 	}
-	public Book addBook(Book book){
+	public Book addBook(Book book) throws BadValueException{
+		if(book.id<0) {
+			throw new BadValueException("Ids are positive numbers");
+		}
+
 		return bookRepository.add(book);
 	}
-	public Book updateBook(Book book){
+	public Book updateBook(Book book) throws BadValueException{
+		if(book.id<0) {
+			throw new BadValueException("Ids are positive numbers");
+		}
 		return bookRepository.update(book);
 	}
 	public void deleteBookById(int id){
