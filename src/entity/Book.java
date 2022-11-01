@@ -7,6 +7,17 @@ public class Book extends Identifiable {
     public String type;
     public String author;
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", type='" + type + '\'' +
+                ", author='" + author + '\'' +
+                ", publicationYear=" + publicationYear +
+                '}';
+    }
+
     public int publicationYear;
 
     public Book(int id, String name, String description, String type, String author,int pubyear) {
