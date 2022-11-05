@@ -20,13 +20,13 @@ public class Book extends Identifiable {
 
     public int publicationYear;
 
-    public Book(int id, String name, String description, String type, String author,int pubyear) {
+    public Book(int id, String name, String description, String type, String author,int pubYear) {
         super(id);
         this.name = name;
         this.description = description;
         this.type = type;
         this.author = author;
-        this.publicationYear = pubyear;
+        this.publicationYear = pubYear;
     }
 
     public int getId() {
@@ -73,7 +73,7 @@ public class Book extends Identifiable {
         return publicationYear;
     }
 
-    public void setPublicationYear(int pubyear) {
-        this.publicationYear = pubyear;
+    public void setPublicationYear(int pubYear) {
+        this.publicationYear = pubYear;
     }
 }

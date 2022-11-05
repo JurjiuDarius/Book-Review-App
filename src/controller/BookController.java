@@ -29,14 +29,21 @@ public class BookController {
 		}
 		return bookRepository.update(book);
 	}
-	public void deleteBookById(int id){
+	public void deleteBookById(int id) throws BadValueException {
+		if(id<0){
+			throw new BadValueException("Ids are positive numbers");
+		}
 		bookRepository.deleteById(id);
 	}
 	public void displayAll(){
+
 		bookView.displayBooks(bookRepository.findAll());
 	}
-	public void displayById(int id){
+	public void displayById(int id) throws BadValueException {
 		Optional<Book> bookOptional=bookRepository.findById(id);
+		if(id<0){
+			throw new BadValueException("Ids are positive numbers");
+		}
 		if(!bookOptional.isEmpty()) {
 			bookView.displayBook(bookOptional.get());
 		}

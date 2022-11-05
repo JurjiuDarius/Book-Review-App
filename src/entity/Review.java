@@ -2,13 +2,13 @@ package entity;
 
 public class Review extends Identifiable {
     public String text;
-    public int publication_date;
+    public int publicationDate;
 
 
-    public Review(String text, int publication_date,int id) {
+    public Review(String text, int publicationDate,int id) {
         super(id);
         this.text = text;
-        this.publication_date = publication_date;
+        this.publicationDate = publicationDate;
 
     }
 
@@ -20,12 +20,12 @@ public class Review extends Identifiable {
         this.text = text;
     }
 
-    public int getPublication_date() {
-        return publication_date;
+    public int getPublicationDate() {
+        return publicationDate;
     }
 
-    public void setPublicationDate(int publication_date) {
-        this.publication_date = publication_date;
+    public void setPublicationDate(int publicationDate) {
+        this.publicationDate = publicationDate;
     }
 
 }

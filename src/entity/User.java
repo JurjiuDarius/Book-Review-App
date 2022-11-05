@@ -5,14 +5,14 @@ import java.util.List;
 public abstract class User extends Identifiable {
 
     public String username;
-    public int birth_year;
+    public int birthYear;
     public String education;
     public List<Book> list;
 
-    public User(int userid, String username, int birth_year, String education, List<Book> list) {
+    public User(int userid, String username, int birthYear, String education, List<Book> list) {
         super(userid);
         this.username = username;
-        this.birth_year = birth_year;
+        this.birthYear = birthYear;
         this.education = education;
         this.list = list;
     }
@@ -25,12 +25,12 @@ public abstract class User extends Identifiable {
         this.username = username;
     }
 
-    public int getBirth_year() {
-        return birth_year;
+    public int getBirthYear() {
+        return birthYear;
     }
 
-    public void setBirth_year(int birth_year) {
-        this.birth_year = birth_year;
+    public void setBirthYear(int birthYear) {
+        this.birthYear = birthYear;
     }
 
     public String getEducation() {

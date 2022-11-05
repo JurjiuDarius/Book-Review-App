@@ -41,10 +41,11 @@ class BookControllerTest {
 			assert (e.getClass().equals(BadValueException.class));
 		}
 	}
+
 	@Test
 	void testUpdateFail() {
 		Book book = new Book(1, "Gone With The wind", "Romantic book", "Classics", "Emily Bronte", 1876);
-		Book updateBook=new Book(1,"new title","","","",1980);
+		Book updateBook = new Book(1, "new title", "", "", "", 1980);
 		try {
 			bookController.addBook(book);
 
@@ -53,8 +54,47 @@ class BookControllerTest {
 		}
 	}
 
+	@Test
+	void testDelete() {
+		Book book = new Book(1, "Gone With The wind", "Romantic book", "Classics", "Emily Bronte", 1876);
+		try {
+			bookController.deleteBookById(1);
+		} catch (BadValueException e) {
+			assert (false);
+		}
+	}
 
+	@Test
+	void testDeleteFail() {
+		Book book = new Book(-2, "Gone With The wind", "Romantic book", "Classics", "Emily Bronte", 1876);
+		try {
+			bookController.deleteBookById(-2);
 
+		} catch (BadValueException e) {
+			throw new RuntimeException(e);
+		}
 
+	}
 
+	@Test
+	void displayByIdTest() {
+		Book book = new Book(1, "Gone With The wind", "Romantic book", "Classics", "Emily Bronte", 1876);
+		try {
+			bookController.displayById(1);
+		} catch (BadValueException e) {
+			assert (false);
+		}
+	}
+
+	@Test
+	void displayByIdFail() {
+		Book book = new Book(-2, "Gone With The wind", "Romantic book", "Classics", "Emily Bronte", 1876);
+		try {
+			bookController.displayById(-2);
+		} catch (BadValueException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
+
+

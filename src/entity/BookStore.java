@@ -5,13 +5,13 @@ import java.util.List;
 public class BookStore extends Identifiable {
 	private int id;
 	private List<StoreLocation> locations;
-	private int establishment_year;
+	private int establishmentYear;
 
-	public BookStore(int id, int id1, List<StoreLocation> locations, int establishment_year) {
+	public BookStore(int id, int id1, List<StoreLocation> locations, int establishmentYear) {
 		super(id);
 		this.id = id1;
 		this.locations = locations;
-		this.establishment_year = establishment_year;
+		this.establishmentYear = establishmentYear;
 	}
 
 	public List<StoreLocation> getLocations() {
@@ -23,11 +23,11 @@ public class BookStore extends Identifiable {
 	}
 
 	public int getEstablishment_year() {
-		return establishment_year;
+		return establishmentYear;
 	}
 
-	public void setEstablishment_year(int establishment_year) {
-		this.establishment_year = establishment_year;
+	public void setEstablishmentYear(int establishmentYear) {
+		this.establishmentYear = establishmentYear;
 	}
 
 }
