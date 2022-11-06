@@ -1,16 +1,16 @@
 package view;
 
-import entity.Book;
+import entity.Author;
 
 import java.util.List;
 
 public class AuthorView {
 
-	public void displayBook(Book author){
+	public void displayAuthor(Author author){
 		System.out.println(author);
 	}
-	public void displayBooks(List<Book> authors){
-		for(Book author:authors){
+	public void displayAuthors(List<Author> authors){
+		for(Author author:authors){
 			System.out.println(author);
 		}
 	}

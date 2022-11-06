@@ -1,5 +1,4 @@
 package controller;
-import entity.Book;
 import exception.BadValueException;
 import repository.Repository;
 import entity.Review;

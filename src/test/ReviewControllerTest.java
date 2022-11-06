@@ -68,7 +68,7 @@ class ReviewControllerTest {
 
     @Test
     void testDeleteFail(){
-        Review review = new Review("smecher",2020,1);
+        Review review = new Review("smecher",2020,-2);
         try{
             reviewController.deleteReviewById(-2);
         } catch (BadValueException e) {
@@ -90,7 +90,7 @@ class ReviewControllerTest {
 
    @Test
     void displayByIdTestFail(){
-       Review review = new Review("smecher",2020,1) ;
+       Review review = new Review("smecher",2020,-1) ;
        try{
            reviewController.displayById(-1);
        } catch (BadValueException e) {
