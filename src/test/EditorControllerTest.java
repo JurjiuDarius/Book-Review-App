@@ -1,40 +1,39 @@
 package test;
 
-import controller.AdminController;
-import entity.Admin;
+import controller.EditorController;
+import entity.Editor;
 import entity.Book;
 import exception.BadValueException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import repository.Repository;
-import view.AdminView;
+import view.EditorView;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class AdminControllerTest {
+class EditorControllerTest {
 
-    Repository<Admin> adminRepository = new Repository<Admin>();
-    AdminView adminView = new AdminView();
-    AdminController adminController;
+    Repository<Editor> editorRepository = new Repository<Editor>();
+    EditorView editorView = new EditorView();
+    EditorController editorController;
 
     ArrayList<Book> booklist = new ArrayList<Book>();
 
-
     @BeforeAll
     private void setup() {
-        adminController = new AdminController(adminRepository, adminView);
+        editorController = new EditorController(editorRepository, editorView);
     }
 
     @Test
     void testAdd() {
-        Object List;
 
-        Admin admin = new Admin(1, "Vlad", 1990, "Oxford", booklist);
+        Editor editor = new Editor(1,booklist);
         try {
-            adminController.addAdmin(admin);
+            editorController.addEditor(editor);
         } catch (BadValueException e) {
             assert (false);
         }
@@ -42,9 +41,9 @@ class AdminControllerTest {
 
     @Test
     void testAddFail() {
-        Admin admin = new Admin(-2, "Stephen King", 1950, "Oxford", booklist);
+        Editor editor = new Editor(-2,booklist);
         try {
-            adminController.addAdmin(admin);
+            editorController.addEditor(editor);
 
         } catch (BadValueException e) {
             assert (e.getClass().equals(BadValueException.class));
@@ -53,10 +52,10 @@ class AdminControllerTest {
 
     @Test
     void testUpdateFail() {
-        Admin admin = new Admin(1, "Stephen King", 1950, "Oxford", booklist);
-        Admin updateAdmin = new Admin(1, "Stephen King", 1940, "Oxford", booklist);
+        Editor editor = new Editor(1,booklist);
+        Editor updateEditor = new Editor(-2,booklist);
         try {
-            adminController.addAdmin(admin);
+            editorController.addEditor(editor);
 
         } catch (BadValueException e) {
             assert (false);
@@ -65,9 +64,9 @@ class AdminControllerTest {
 
     @Test
     void testDelete() {
-        Admin admin = new Admin(1, "Stephen King", 1950, "Oxford", booklist);
+        Editor editor = new Editor(1,booklist);
         try {
-            adminController.deleteAdminById(1);
+            editorController.deleteEditorById(1);
         } catch (BadValueException e) {
             assert (false);
         }
@@ -75,9 +74,9 @@ class AdminControllerTest {
 
     @Test
     void testDeleteFail() {
-        Admin admin = new Admin(-2, "Stephen King", 1950, "Oxford", booklist);
+        Editor editor = new Editor(1,booklist);
         try {
-            adminController.deleteAdminById(-2);
+            editorController.deleteEditorById(-2);
 
         } catch (BadValueException e) {
             throw new RuntimeException(e);
@@ -87,9 +86,9 @@ class AdminControllerTest {
 
     @Test
     void displayByIdTest() {
-        Admin admin = new Admin(1, "Stephen King", 1950, "Oxford", booklist);
+        Editor editor = new Editor(1,booklist);
         try {
-            adminController.displayById(1);
+            editorController.displayById(1);
         } catch (BadValueException e) {
             assert (false);
         }
@@ -97,15 +96,11 @@ class AdminControllerTest {
 
     @Test
     void displayByIdFail() {
-        Admin admin = new Admin(-2, "Stephen King", 1950, "Oxford", booklist);
+        Editor editor = new Editor(1,booklist);
         try {
-            adminController.displayById(-2);
+            editorController.displayById(2);
         } catch (BadValueException e) {
             throw new RuntimeException(e);
         }
     }
 }
-
-
-
-

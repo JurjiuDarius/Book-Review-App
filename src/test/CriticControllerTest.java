@@ -1,40 +1,37 @@
 package test;
 
-import controller.AdminController;
-import entity.Admin;
+import controller.CriticController;
 import entity.Book;
+import entity.BookStore;
+import entity.Critic;
 import exception.BadValueException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import repository.Repository;
-import view.AdminView;
+import view.CriticView;
 
-import java.util.*;
-
+import java.util.ArrayList;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class AdminControllerTest {
+class CriticControllerTest {
 
-    Repository<Admin> adminRepository = new Repository<Admin>();
-    AdminView adminView = new AdminView();
-    AdminController adminController;
+    Repository<Critic> criticRepository = new Repository<Critic>();
+    CriticView criticView = new CriticView();
+    CriticController criticController;
 
     ArrayList<Book> booklist = new ArrayList<Book>();
 
-
     @BeforeAll
     private void setup() {
-        adminController = new AdminController(adminRepository, adminView);
+        criticController = new CriticController(criticRepository, criticView);
     }
 
     @Test
     void testAdd() {
-        Object List;
-
-        Admin admin = new Admin(1, "Vlad", 1990, "Oxford", booklist);
+        Critic critic = new Critic(1,"Ronaldo",1992,"Stanford",booklist);
         try {
-            adminController.addAdmin(admin);
+            criticController.addCritic(critic);
         } catch (BadValueException e) {
             assert (false);
         }
@@ -42,9 +39,9 @@ class AdminControllerTest {
 
     @Test
     void testAddFail() {
-        Admin admin = new Admin(-2, "Stephen King", 1950, "Oxford", booklist);
+        Critic critic = new Critic(1,"Ronaldo",1992,"Stanford",booklist);
         try {
-            adminController.addAdmin(admin);
+            criticController.addCritic(critic);
 
         } catch (BadValueException e) {
             assert (e.getClass().equals(BadValueException.class));
@@ -53,10 +50,10 @@ class AdminControllerTest {
 
     @Test
     void testUpdateFail() {
-        Admin admin = new Admin(1, "Stephen King", 1950, "Oxford", booklist);
-        Admin updateAdmin = new Admin(1, "Stephen King", 1940, "Oxford", booklist);
+        Critic critic = new Critic(1,"Ronaldo",1992,"Stanford",booklist);
+        Critic updateCritic = new Critic(1,"new name",1992,"",booklist);
         try {
-            adminController.addAdmin(admin);
+            criticController.addCritic(critic);
 
         } catch (BadValueException e) {
             assert (false);
@@ -65,9 +62,9 @@ class AdminControllerTest {
 
     @Test
     void testDelete() {
-        Admin admin = new Admin(1, "Stephen King", 1950, "Oxford", booklist);
+        Critic critic = new Critic(1,"Ronaldo",1992,"Stanford",booklist);
         try {
-            adminController.deleteAdminById(1);
+            criticController.deleteCriticById(1);
         } catch (BadValueException e) {
             assert (false);
         }
@@ -75,9 +72,9 @@ class AdminControllerTest {
 
     @Test
     void testDeleteFail() {
-        Admin admin = new Admin(-2, "Stephen King", 1950, "Oxford", booklist);
+        Critic critic = new Critic(-2,"Ronaldo",1992,"Stanford",booklist);
         try {
-            adminController.deleteAdminById(-2);
+            criticController.deleteCriticById(-2);
 
         } catch (BadValueException e) {
             throw new RuntimeException(e);
@@ -87,9 +84,9 @@ class AdminControllerTest {
 
     @Test
     void displayByIdTest() {
-        Admin admin = new Admin(1, "Stephen King", 1950, "Oxford", booklist);
+        Critic critic = new Critic(1,"Ronaldo",1992,"Stanford",booklist);
         try {
-            adminController.displayById(1);
+            criticController.displayById(1);
         } catch (BadValueException e) {
             assert (false);
         }
@@ -97,15 +94,14 @@ class AdminControllerTest {
 
     @Test
     void displayByIdFail() {
-        Admin admin = new Admin(-2, "Stephen King", 1950, "Oxford", booklist);
+        Critic critic = new Critic(1,"Ronaldo",1992,"Stanford",booklist);
         try {
-            adminController.displayById(-2);
+            criticController.displayById(-2);
         } catch (BadValueException e) {
             throw new RuntimeException(e);
         }
     }
 }
-
 
 
 
