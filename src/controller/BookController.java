@@ -16,6 +16,11 @@ public class BookController {
 		this.bookRepository=repository;
 		this.bookView=bookView;
 	}
+
+    public BookController() {
+
+    }
+
 	public Book addBook(Book book) throws BadValueException{
 		if(book.id<0) {
 			throw new BadValueException("Ids are positive numbers");
