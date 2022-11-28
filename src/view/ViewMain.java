@@ -49,7 +49,7 @@ public class ViewMain {
         System.out.println("1:Display Books");
         System.out.println("2:Display Authors");
         System.out.println("3:Display Stores");
-        System.out.println("4.Display Admins");
+        System.out.println("4.Display Adminss");
         System.out.println("5:Display Critics");
         System.out.println("6:Display Editors");
         System.out.println("7:Display Reviews");
