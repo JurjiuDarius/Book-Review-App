@@ -17,9 +17,6 @@ public class BookController {
 		this.bookView=bookView;
 	}
 
-    public BookController() {
-
-    }
 
 	public Book addBook(Book book) throws BadValueException{
 		if(book.id<0) {
