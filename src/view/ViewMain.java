@@ -31,7 +31,7 @@ public class ViewMain {
                     break;
                 case "4":
                     System.out.println("Options:");
-                    System.out.println("1:Display Books");
+                    System.out.println("1:Display Boooks");
                     System.out.println("2:Display Author");
                     System.out.println("3:DisplayStores");
                     System.out.println("4:Menu");
