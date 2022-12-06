@@ -18,6 +18,6 @@ import java.util.List;
 public class Author extends User {
 	private String name;
 	private String education;
-	@OneToMany(mappedBy = "author")
+	@OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
 	private List<Book> books;
 }

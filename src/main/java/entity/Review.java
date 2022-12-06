@@ -1,31 +1,27 @@
 package entity;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
+@Entity
+@Table(name="review")
 public class Review extends Identifiable {
-    public String text;
-    public int publicationDate;
+    private String text;
+    @Column(name="publication_date")
+    private Integer publicationDate;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="critic_id")
+    private Critic critic;
 
-    public Review(String text, int publicationDate,int id) {
-        super(id);
-        this.text = text;
-        this.publicationDate = publicationDate;
-
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public int getPublicationDate() {
-        return publicationDate;
-    }
-
-    public void setPublicationDate(int publicationDate) {
-        this.publicationDate = publicationDate;
-    }
-
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="book_id")
+    private Book book;
 }

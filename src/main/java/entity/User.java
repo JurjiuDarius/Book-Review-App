@@ -19,13 +19,7 @@ public abstract class User extends Identifiable{
 
     public String username;
     @Column(name="birth_year")
-    public int birthYear;
-
-    public User(int userid, String username, int birthYear) {
-        super(userid);
-        this.username = username;
-        this.birthYear = birthYear;
-    }
+    public Integer birthYear;
 
 }
 

@@ -1,22 +1,22 @@
 package entity;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
 import java.util.List;
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
+@Entity
+@Table(name="editor")
 public class Editor extends Identifiable {
+    @OneToMany(mappedBy = "editor",cascade = CascadeType.ALL)
+    private List<Book> books;
 
-    public List<Book> list;
-
-    public Editor(int id, List<Book> list) {
-        super(id);
-        this.list = list;
-    }
-
-
-    public List<Book> getList() {
-        return list;
-    }
-
-    public void setList(List<Book> list) {
-        this.list = list;
-    }
+    @Column(name="establishment_year")
+    private Integer establishmentYear;
 }

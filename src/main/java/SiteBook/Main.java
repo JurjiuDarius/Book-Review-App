@@ -1,17 +1,15 @@
 package SiteBook;
 
+import entity.Admin;
 import entity.Author;
 import entity.Book;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.PersistenceUnit;
+import jakarta.persistence.*;
+import org.hibernate.SessionFactory;
+import org.hibernate.internal.SessionFactoryImpl;
 import repository.Repository;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.lang.module.Configuration;
+import java.util.*;
 
 public class Main {
 //    @PersistenceUnit(name="BookReviewApp")
@@ -19,15 +17,12 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello World!");
         EntityManagerFactory emf= Persistence.createEntityManagerFactory("BookReviewApp");
-        EntityManager em= emf.createEntityManager();
-        Author author1 =Author.builder().education("Oxford1").name("Sebi").birthYear(1920).build();
-        em.getTransaction().begin();
-        em.persist(author1);
-        Author author2 =Author.builder().education("Inheritance works").name("Sebi2").birthYear(1920).username("Sebi2Username").build();
-        em.persist(author2);
-        em.getTransaction().commit();
-        System.out.println("Finished main");
-
+        Repository<Author> authorRepository=new Repository<>(emf.createEntityManager(),"Author");
+        Author author1 =Author.builder().education("Oxford").books(new ArrayList<>()).name("Patrick Rothfuss").username("user").birthYear(1920).build();
+        Book book=Book.builder().name("Check cascade persistence").build();
+        author1.getBooks().add(book);
+        book.setAuthor(author1);
+        authorRepository.add(author1);
     }
 
 }

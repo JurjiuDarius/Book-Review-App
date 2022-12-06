@@ -1,9 +1,20 @@
 package entity;
 
-import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+@Data
+@AllArgsConstructor
+@SuperBuilder
+@MappedSuperclass
+@Entity
+@Table(name="admin")
 public class Admin extends User {
-    public Admin(int id, String name, int birthYear, List<Book> list) {
-        super(id, name, birthYear);
-    }
 }

@@ -1,33 +1,34 @@
 package entity;
 
-import java.util.List;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
+@Entity
+@Table(name="book_store")
 public class BookStore extends Identifiable {
 	private int id;
-	private List<StoreLocation> locations;
+
 	private int establishmentYear;
 
 	public BookStore(int id, int id1, List<StoreLocation> locations, int establishmentYear) {
 		super(id);
 		this.id = id1;
-		this.locations = locations;
 		this.establishmentYear = establishmentYear;
 	}
-
-	public List<StoreLocation> getLocations() {
-		return locations;
-	}
-
-	public void setLocations(List<StoreLocation> locations) {
-		this.locations = locations;
-	}
-
-	public int getEstablishment_year() {
-		return establishmentYear;
-	}
-
-	public void setEstablishmentYear(int establishmentYear) {
-		this.establishmentYear = establishmentYear;
-	}
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(
+			name = "distribution_contract",
+			joinColumns = { @JoinColumn(name = "store_id") },
+			inverseJoinColumns = { @JoinColumn(name = "book_id") }
+	)
+	List<Book> books;
 
 }

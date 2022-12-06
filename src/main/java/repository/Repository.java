@@ -1,6 +1,12 @@
 package repository;
 
 import entity.Identifiable;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,43 +14,46 @@ import java.util.Optional;
 
 public class Repository <T extends Identifiable>{
 
-	public Repository() {
-		this.entities = new ArrayList<>();
-	}
-
+	private EntityManager entityManager;
+	private String className;
 	private List<T> entities;
 
-	public List<T> findAll(){
-		return entities;
-	}
-	public Optional<T> findById(int id) {
-		for(T entity:entities)
-		{
-			if(entity.getId()==id)
-				return Optional.of(entity);
-		}
-		return Optional.empty();
-
-	}
-	public void deleteById(int id){
-		for(T entity:entities){
-			if(entity.getId()==id){
-				entities.remove(entity);
+	public Repository(EntityManager entityManager, String className) {
+		this.className=className;
+		this.entityManager=entityManager;
 			}
+
+
+	public List<T> findAll(){
+		return entityManager.createQuery("SELECT entity FROM " +className+" entity").getResultList();
+	}
+	public Optional<T> findById(Integer id) {
+		List<T> list=entityManager.createQuery("SELECT entity FROM " +className+" entity WHERE entity.id="+id.toString()).getResultList();
+		if(list.isEmpty()){
+			return Optional.empty();
 		}
+		else return Optional.of(list.get(0));
+	}
+	public void deleteById(Integer id) throws EntityNotFoundException{
+		Optional<T> optional=this.findById(id);
+		if(optional.isEmpty())
+			throw new EntityNotFoundException(className+" entity was not found");
+		else{
+		entityManager.getTransaction().begin();
+		entityManager.remove(optional.get());
+		entityManager.getTransaction().commit();}
 	}
 	public T add(T element){
-		entities.add(element);
+		entityManager.getTransaction().begin();
+		entityManager.persist(element);
+		entityManager.getTransaction().commit();
 		return element;
 	}
 	public T update(T element){
-		for(int i=0;i<=entities.size();i++){
-			if(entities.get(i).getId()==element.getId()){
-				entities.set(i,element);
-				return element;
-			}
-		}
-		return null;
+		entityManager.getTransaction().begin();
+		entityManager.merge(element);
+		entityManager.getTransaction().commit();
+		return element;
 	}
 
 }
