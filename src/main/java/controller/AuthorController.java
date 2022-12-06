@@ -16,6 +16,8 @@ public class AuthorController {
         this.authorRepository=repository;
         this.authorView=authorView;
     }
+
+
     public Author addAuthor(Author author) throws BadValueException{
         if(author.getId()<0) {
             throw new BadValueException("Ids are positive numbers");

@@ -6,11 +6,12 @@ import java.util.List;
 
 public class BookView {
 
-	public void displayBook(Book book){
+	public void displayBook(Book book) {
 		System.out.println(book);
 	}
-	public void displayBooks(List<Book> books){
-		for(Book book:books){
+
+	public void displayBooks(List<Book> books) {
+		for (Book book : books) {
 			System.out.println(book);
 		}
 	}
