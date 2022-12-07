@@ -3,53 +3,51 @@ package repository;
 import entity.Identifiable;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Repository <T extends Identifiable>{
+public class Repository<T extends Identifiable> implements CrudRepositoryInterface<T> {
 
-	private EntityManager entityManager;
-	private String className;
+	private final EntityManager entityManager;
+	private final String className;
 	private List<T> entities;
 
 	public Repository(EntityManager entityManager, String className) {
-		this.className=className;
-		this.entityManager=entityManager;
-			}
-
-
-	public List<T> findAll(){
-		return entityManager.createQuery("SELECT entity FROM " +className+" entity").getResultList();
+		this.className = className;
+		this.entityManager = entityManager;
 	}
+
+	public List<T> findAll() {
+		return entityManager.createQuery("SELECT entity FROM " + className + " entity").getResultList();
+	}
+
 	public Optional<T> findById(Integer id) {
-		List<T> list=entityManager.createQuery("SELECT entity FROM " +className+" entity WHERE entity.id="+id.toString()).getResultList();
-		if(list.isEmpty()){
+		List<T> list = entityManager.createQuery("SELECT entity FROM " + className + " entity WHERE entity.id=" + id.toString()).getResultList();
+		if (list.isEmpty()) {
 			return Optional.empty();
+		} else return Optional.of(list.get(0));
+	}
+
+	public void deleteById(Integer id) throws EntityNotFoundException {
+		Optional<T> optional = this.findById(id);
+		if (optional.isEmpty())
+			throw new EntityNotFoundException(className + " entity was not found");
+		else {
+			entityManager.getTransaction().begin();
+			entityManager.remove(optional.get());
+			entityManager.getTransaction().commit();
 		}
-		else return Optional.of(list.get(0));
 	}
-	public void deleteById(Integer id) throws EntityNotFoundException{
-		Optional<T> optional=this.findById(id);
-		if(optional.isEmpty())
-			throw new EntityNotFoundException(className+" entity was not found");
-		else{
-		entityManager.getTransaction().begin();
-		entityManager.remove(optional.get());
-		entityManager.getTransaction().commit();}
-	}
-	public T add(T element){
+
+	public T add(T element) {
 		entityManager.getTransaction().begin();
 		entityManager.persist(element);
 		entityManager.getTransaction().commit();
 		return element;
 	}
-	public T update(T element){
+
+	public T update(T element) {
 		entityManager.getTransaction().begin();
 		entityManager.merge(element);
 		entityManager.getTransaction().commit();

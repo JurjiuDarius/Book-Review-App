@@ -12,14 +12,16 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @MappedSuperclass
 @Entity
-@Table(name="location")
+@Table(name = "location")
 public class StoreLocation extends Identifiable {
+
 	private int id;
 	private String city;
 	private String country;
 	private String county;
 	private String address;
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="store_id")
+	@JoinColumn(name = "store_id")
 	private BookStore bookStore;
+
 }

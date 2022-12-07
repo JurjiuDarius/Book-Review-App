@@ -2,7 +2,6 @@ package entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -14,10 +13,15 @@ import java.util.List;
 @AllArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name="author")
-public class Author extends User {
+@Table(name = "author")
+public class Author extends Identifiable {
+
 	private String name;
 	private String education;
-	@OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
 	private List<Book> books;
+
+	@Column(name = "birth_year")
+	private Integer birthYear;
+
 }

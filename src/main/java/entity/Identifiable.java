@@ -15,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @MappedSuperclass
 @SuperBuilder
 public abstract class Identifiable {
+
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Id
 	int id;

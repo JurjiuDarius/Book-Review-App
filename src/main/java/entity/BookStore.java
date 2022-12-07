@@ -7,15 +7,23 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @Entity
-@Table(name="book_store")
+@Table(name = "book_store")
 public class BookStore extends Identifiable {
-	private int id;
 
+	@ManyToMany(cascade = {CascadeType.ALL})
+	@JoinTable(
+			name = "distribution_contract",
+			joinColumns = {@JoinColumn(name = "store_id")},
+			inverseJoinColumns = {@JoinColumn(name = "book_id")}
+	)
+	List<Book> books;
+	private int id;
 	private int establishmentYear;
 
 	public BookStore(int id, int id1, List<StoreLocation> locations, int establishmentYear) {
@@ -23,12 +31,5 @@ public class BookStore extends Identifiable {
 		this.id = id1;
 		this.establishmentYear = establishmentYear;
 	}
-	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(
-			name = "distribution_contract",
-			joinColumns = { @JoinColumn(name = "store_id") },
-			inverseJoinColumns = { @JoinColumn(name = "book_id") }
-	)
-	List<Book> books;
 
 }
