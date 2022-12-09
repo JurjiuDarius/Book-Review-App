@@ -13,15 +13,15 @@ public class AdminService {
 	private AuthenticationService authenticationService;
 	private Repository<Author> authorRepository;
 
-	private void deleteUserById(Integer id) {
+	public void deleteUserById(Integer id) {
 		authenticationService.deleteUser(id);
 	}
 
-	private void addAuthor(Author author) {
+	public void addAuthor(Author author) {
 		authorRepository.add(author);
 	}
 
-	private void addBookForAuthor(Integer authorId, Book book) {
+	public void addBookForAuthor(Integer authorId, Book book) {
 		Author author = authorRepository.findById(authorId).get();
 		if (author.getBooks() == null) {
 			author.setBooks(new ArrayList<>());
@@ -30,7 +30,7 @@ public class AdminService {
 		authorRepository.update(author);
 	}
 
-	private void deleteAuthor(Integer id) {
+	public void deleteAuthor(Integer id) {
 		authorRepository.deleteById(id);
 	}
 
