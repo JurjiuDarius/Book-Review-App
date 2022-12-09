@@ -305,7 +305,7 @@ public class ViewMain {
                System.out.println("Enter Author Name");
                Scanner myObj = new Scanner(System.in);
                String userInput = myObj.nextLine();
-               System.out.println("Enter Author Education");
+               System.out.println("Enter Authorr Education");
                String education = myObj.nextLine();
                System.out.println("Enter Author Birthday");
                Integer birthday = Integer.valueOf(myObj.nextLine());

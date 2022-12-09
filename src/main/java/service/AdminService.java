@@ -33,5 +33,5 @@ public class AdminService {
 	public void deleteAuthor(Integer id) {
 		authorRepository.deleteById(id);
 	}
-
+//2
 }

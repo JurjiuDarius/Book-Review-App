@@ -6,7 +6,7 @@ import service.CriticService;
 
 @AllArgsConstructor
 public class CriticController {
-
+//
 	private CriticService criticService;
 
 	public void addReview(User critic, Integer bookId, String text){
