@@ -1,9 +1,7 @@
 package view;
 
 
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import controller.*;
 import exception.EntityNotFoundException;
@@ -18,9 +16,11 @@ import entity.*;
 import repository.Repository;
 import service.AuthenticationService;
 import service.CriticService;
+import enums.AuthorityEnum;
 
 public class ViewMain {
     public static void main(String[] args) throws EntityNotFoundException {
+        AuthorityEnum authorityEnum;
         EntityManager entityManager = new EntityManager() {
             @Override
             public void persist(Object o) {
@@ -287,48 +287,198 @@ public class ViewMain {
         CriticService criticService = new CriticService(bookRepository,reviewRepository,userRepository);
         UserController userController = new UserController(authenticationService);
         CriticController criticController = new CriticController(criticService);;
+        BookView bookView = new BookView();
+        BookController bookController = new BookController(bookRepository,bookView);
         AdminController adminController = new AdminController(adminService);
         Scanner input = new Scanner(System.in);
+        String adminPass;
+        String adminUser;
+        String UserN;
+        String UserP;
         String username = input.nextLine();
         System.out.println("Username:"+username);
         String password = input.nextLine();
         System.out.println("Password:" + password);
-        userController.logIn(username,password);
-        int selection;
-        Scanner adminMenu = new Scanner(System.in);
-        System.out.println("1. Add Author");
-        System.out.println("2. Add Books for Author");
-        System.out.println("3. Quit");
-        do{
-            selection = adminMenu.nextInt();
-            if(selection == 1){
-               System.out.println("Enter Author Name");
-               Scanner myObj = new Scanner(System.in);
-               String userInput = myObj.nextLine();
-               System.out.println("Enter Authorr Education");
-               String education = myObj.nextLine();
-               System.out.println("Enter Author Birthday");
-               Integer birthday = Integer.valueOf(myObj.nextLine());
-               Author a;
-               a = new Author(userInput,education,bookArrayList,birthday);
-               adminController.addAuthor(a);
+        if(userController.logIn(adminUser,adminPass));
+        {
+            int selection;
+            Scanner adminMenu = new Scanner(System.in);
+            System.out.println("1. Add Author");
+            System.out.println("2. Add Books for Author");
+            System.out.println("3. Quit");
+            do {
+                selection = adminMenu.nextInt();
+                if (selection == 1) {
+                    System.out.println("Enter Author Name");
+                    Scanner myObj = new Scanner(System.in);
+                    String userInput = myObj.nextLine();
+                    System.out.println("Enter Authorr Education");
+                    String education = myObj.nextLine();
+                    System.out.println("Enter Author Birthday");
+                    Integer birthday = Integer.valueOf(myObj.nextLine());
+                    Author a;
+                    List<Book> bookList = new List<Book>() {
+                        @Override
+                        public int size() {
+                            return 0;
+                        }
 
-            }
-            else if (selection == 2){
-                Scanner myObj2 = new Scanner(System.in);
-                System.out.println("To which author do you wanna add books");
-                Integer authorId = myObj2.nextInt();
-                System.out.println("Enter Book name");
-                String name = myObj2.nextLine();
-                System.out.println("Enter Publication Year");
-                Integer pubY = myObj2.nextInt();
-                Book book = new Book();
-                adminController.addBookForAuth(authorId,book);
-            }
-            else if (selection == 3);
-            System.out.println("3");
-        }while(selection != 4);
-        adminMenu.close();
+                        @Override
+                        public boolean isEmpty() {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean contains(Object o) {
+                            return false;
+                        }
+
+                        @Override
+                        public Iterator<Book> iterator() {
+                            return null;
+                        }
+
+                        @Override
+                        public Object[] toArray() {
+                            return new Object[0];
+                        }
+
+                        @Override
+                        public <T> T[] toArray(T[] a) {
+                            return null;
+                        }
+
+                        @Override
+                        public boolean add(Book book) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean remove(Object o) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean containsAll(Collection<?> c) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean addAll(Collection<? extends Book> c) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean addAll(int index, Collection<? extends Book> c) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean removeAll(Collection<?> c) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean retainAll(Collection<?> c) {
+                            return false;
+                        }
+
+                        @Override
+                        public void clear() {
+
+                        }
+
+                        @Override
+                        public Book get(int index) {
+                            return null;
+                        }
+
+                        @Override
+                        public Book set(int index, Book element) {
+                            return null;
+                        }
+
+                        @Override
+                        public void add(int index, Book element) {
+
+                        }
+
+                        @Override
+                        public Book remove(int index) {
+                            return null;
+                        }
+
+                        @Override
+                        public int indexOf(Object o) {
+                            return 0;
+                        }
+
+                        @Override
+                        public int lastIndexOf(Object o) {
+                            return 0;
+                        }
+
+                        @Override
+                        public ListIterator<Book> listIterator() {
+                            return null;
+                        }
+
+                        @Override
+                        public ListIterator<Book> listIterator(int index) {
+                            return null;
+                        }
+
+                        @Override
+                        public List<Book> subList(int fromIndex, int toIndex) {
+                            return null;
+                        }
+                    };
+                    a = new Author(userInput, education, bookList, birthday);
+                    adminController.addAuthor(a);
+
+                } else if (selection == 2) {
+                    Scanner myObj2 = new Scanner(System.in);
+                    System.out.println("To which author do you wanna add books");
+                    Integer authorId = myObj2.nextInt();
+                    System.out.println("Enter Book name");
+                    String name = myObj2.nextLine();
+                    System.out.println("Enter Publication Year");
+                    Integer pubY = myObj2.nextInt();
+                    Book b;
+                    b = new Book(name, pubY, authorId);
+                    adminController.addBookForAuth(authorId, b);
+                } else if (selection == 3) ;
+                System.out.println("3");
+            } while (selection != 4);
+            adminMenu.close();
+        }
+        else if (userController.logIn(UserN,UserP));
+        {
+            int selection;
+            Scanner userMenu = new Scanner(System.in);
+            System.out.println("1. DisplayBooks");
+            System.out.println("2. Add Review");
+            System.out.println("3. Quit");
+            do{
+                selection = userMenu.nextInt();
+                if(selection == 1){
+                    bookController.displayAll();
+                }
+                if(selection == 2){
+                    Scanner myObj3 = new Scanner(System.in);
+                    if(authorityEnum == AuthorityEnum.CRITIC);
+                    User critic = new User();
+                    System.out.println("Which book?");
+                    int bookid = myObj3.nextInt();
+                    System.out.println("Review:");
+                    String text = myObj3.nextLine();
+                    criticController.addReview(critic,bookid,text);
+
+                }
+
+            }while(selection != 3);
+            userMenu.close();
+        }
 
 
     }
