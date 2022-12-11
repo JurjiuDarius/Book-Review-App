@@ -1,6 +1,7 @@
 package entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @SuperBuilder
 @Table(name = "book")
+@AllArgsConstructor
 public class Book extends Identifiable {
 
 	public int id;

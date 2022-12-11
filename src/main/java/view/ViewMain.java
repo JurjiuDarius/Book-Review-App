@@ -20,7 +20,7 @@ import enums.AuthorityEnum;
 
 public class ViewMain {
     public static void main(String[] args) throws EntityNotFoundException {
-        AuthorityEnum authorityEnum;
+        AuthorityEnum authorityEnum = null;
         EntityManager entityManager = new EntityManager() {
             @Override
             public void persist(Object o) {
@@ -278,46 +278,49 @@ public class ViewMain {
             }
         };
         String className = new String();
-        Repository<Book> bookRepository = new Repository<>(entityManager,className);
-        Repository<Author> authorRepository = new Repository<>(entityManager,className);
-        Repository<Review> reviewRepository = new Repository<>(entityManager,className);
-        Repository<User> userRepository = new Repository<>(entityManager,className);
+        Repository<Book> bookRepository = new Repository<>(entityManager, className);
+        Repository<Author> authorRepository = new Repository<>(entityManager, className);
+        Repository<Review> reviewRepository = new Repository<>(entityManager, className);
+        Repository<User> userRepository = new Repository<>(entityManager, className);
         AuthenticationService authenticationService = new AuthenticationService(userRepository);
-        AdminService adminService = new AdminService(authenticationService,authorRepository);
-        CriticService criticService = new CriticService(bookRepository,reviewRepository,userRepository);
+        AdminService adminService = new AdminService(authenticationService, authorRepository);
+        CriticService criticService = new CriticService(bookRepository, reviewRepository, userRepository);
         UserController userController = new UserController(authenticationService);
-        CriticController criticController = new CriticController(criticService);;
+        CriticController criticController = new CriticController(criticService);
+        ;
         BookView bookView = new BookView();
-        BookController bookController = new BookController(bookRepository,bookView);
+        BookController bookController = new BookController(bookRepository, bookView);
         AdminController adminController = new AdminController(adminService);
         Scanner input = new Scanner(System.in);
-        String adminPass;
-        String adminUser;
-        String UserN;
-        String UserP;
-        String username = input.nextLine();
-        System.out.println("Username:"+username);
-        String password = input.nextLine();
-        System.out.println("Password:" + password);
-        if(userController.logIn(adminUser,adminPass));
-        {
-            int selection;
-            Scanner adminMenu = new Scanner(System.in);
-            System.out.println("1. Add Author");
-            System.out.println("2. Add Books for Author");
-            System.out.println("3. Quit");
-            do {
-                selection = adminMenu.nextInt();
-                if (selection == 1) {
-                    System.out.println("Enter Author Name");
-                    Scanner myObj = new Scanner(System.in);
-                    String userInput = myObj.nextLine();
-                    System.out.println("Enter Authorr Education");
-                    String education = myObj.nextLine();
-                    System.out.println("Enter Author Birthday");
-                    Integer birthday = Integer.valueOf(myObj.nextLine());
-                    Author a;
-                    List<Book> bookList = new List<Book>() {
+        String adminPass = new String();
+        String adminUser = new String();
+        String UserN = new String();
+        String UserP = new String();
+
+
+            String username = input.nextLine();
+            System.out.println("Username:" + username);
+            String password = input.nextLine();
+            System.out.println("Password:" + password);
+            userController.logIn(adminUser, adminPass);
+            {
+                Scanner adminMenu = new Scanner(System.in);
+                System.out.println("1. Add Author");
+                System.out.println("2. Add Book for Author");
+                System.out.println("3. Quit");
+                Integer select = adminMenu.nextInt();
+                   do {
+                       switch (select){
+                           case 1:
+
+                            Author a;
+                            System.out.println("Author name:");
+                            String name = adminMenu.nextLine();
+                            System.out.println("Author education");
+                            String educ = adminMenu.nextLine();
+                            System.out.println("Author birthYear");
+                            Integer birthYear = adminMenu.nextInt();
+                            List<Book> bookList = new List<Book>() {
                         @Override
                         public int size() {
                             return 0;
@@ -433,53 +436,188 @@ public class ViewMain {
                             return null;
                         }
                     };
-                    a = new Author(userInput, education, bookList, birthday);
-                    adminController.addAuthor(a);
+                    //System.out.println("Author Books");
+                    //String bookName = adminMenu.nextLine();
+                    //System.out.println("Book description");
+                    //String descript = adminMenu.nextLine();
+                    //System.out.println("Book type");
+                    //String type = adminMenu.nextLine();
+                    //System.out.println("Publication year");
+                    //Integer pubY = adminMenu.nextInt();
+                    //System.out.println("Where can you find the book?");
+                    //List<BookStore> bookStoreList = new List<BookStore>() {
+                               a = new Author(name, educ, bookList, birthYear);
+                               adminController.addAuthor(a);
+                               break;
+                          case 2:
 
-                } else if (selection == 2) {
-                    Scanner myObj2 = new Scanner(System.in);
-                    System.out.println("To which author do you wanna add books");
-                    Integer authorId = myObj2.nextInt();
-                    System.out.println("Enter Book name");
-                    String name = myObj2.nextLine();
-                    System.out.println("Enter Publication Year");
-                    Integer pubY = myObj2.nextInt();
-                    Book b;
-                    b = new Book(name, pubY, authorId);
-                    adminController.addBookForAuth(authorId, b);
-                } else if (selection == 3) ;
-                System.out.println("3");
-            } while (selection != 4);
-            adminMenu.close();
-        }
-        else if (userController.logIn(UserN,UserP));
-        {
-            int selection;
-            Scanner userMenu = new Scanner(System.in);
-            System.out.println("1. DisplayBooks");
-            System.out.println("2. Add Review");
-            System.out.println("3. Quit");
-            do{
-                selection = userMenu.nextInt();
-                if(selection == 1){
-                    bookController.displayAll();
-                }
-                if(selection == 2){
-                    Scanner myObj3 = new Scanner(System.in);
-                    if(authorityEnum == AuthorityEnum.CRITIC);
-                    User critic = new User();
-                    System.out.println("Which book?");
-                    int bookid = myObj3.nextInt();
-                    System.out.println("Review:");
-                    String text = myObj3.nextLine();
-                    criticController.addReview(critic,bookid,text);
+                          Book b;
+                          Author au;
+                          Editor e;
 
-                }
+                          System.out.println("Enter AuthorID");
+                          Integer authorId = adminMenu.nextInt();
+                          System.out.println("Book name");
+                          String bookName = adminMenu.nextLine();
+                          System.out.println("Description");
+                          String descr = adminMenu.nextLine();
+                          System.out.println("Book Type");
+                          String type = adminMenu.nextLine();
+                          System.out.println("Publication Year?");
+                          Integer pubyear = adminMenu.nextInt();
+                          au = new Author();
+                          e = new Editor();
+                          List<BookStore> bookStoreList = new List<BookStore>() {
+                        @Override
+                        public int size() {
+                            return 0;
+                        }
 
-            }while(selection != 3);
-            userMenu.close();
+                        @Override
+                        public boolean isEmpty() {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean contains(Object o) {
+                            return false;
+                        }
+
+                        @Override
+                        public Iterator<BookStore> iterator() {
+                            return null;
+                        }
+
+                        @Override
+                        public Object[] toArray() {
+                            return new Object[0];
+                        }
+
+                        @Override
+                        public <T> T[] toArray(T[] a) {
+                            return null;
+                        }
+
+                        @Override
+                        public boolean add(BookStore bookStore) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean remove(Object o) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean containsAll(Collection<?> c) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean addAll(Collection<? extends BookStore> c) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean addAll(int index, Collection<? extends BookStore> c) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean removeAll(Collection<?> c) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean retainAll(Collection<?> c) {
+                            return false;
+                        }
+
+                        @Override
+                        public void clear() {
+
+                        }
+
+                        @Override
+                        public BookStore get(int index) {
+                            return null;
+                        }
+
+                        @Override
+                        public BookStore set(int index, BookStore element) {
+                            return null;
+                        }
+
+                        @Override
+                        public void add(int index, BookStore element) {
+
+                        }
+
+                        @Override
+                        public BookStore remove(int index) {
+                            return null;
+                        }
+
+                        @Override
+                        public int indexOf(Object o) {
+                            return 0;
+                        }
+
+                        @Override
+                        public int lastIndexOf(Object o) {
+                            return 0;
+                        }
+
+                        @Override
+                        public ListIterator<BookStore> listIterator() {
+                            return null;
+                        }
+
+                        @Override
+                        public ListIterator<BookStore> listIterator(int index) {
+                            return null;
+                        }
+
+                        @Override
+                        public List<BookStore> subList(int fromIndex, int toIndex) {
+                            return null;
+                        }
+                    };
+                          b = new Book(authorId, bookName, descr, type, bookStoreList, au, pubyear, e);
+                          adminController.addBookForAuth(authorId, b);
+                         }
+
+
+                   } while (select != 3);
+                      adminMenu.close();
+              }
+
+            userController.logIn(UserN, UserP);
+            {
+                   Scanner userMenu = new Scanner(System.in);
+                   int selection = userMenu.nextInt();
+                   System.out.println("1:Display Books");
+                   System.out.println("2: Add Review");
+                   System.out.println("3: Quit");
+                     do {
+                         switch(selection){
+                             case 1:
+                                 bookController.displayAll();
+                                 break;
+                             case 2:
+                                  User critic = new User();
+                                  System.out.println("Book id");
+                                  Integer bookId =userMenu.nextInt();
+                                  System.out.println("Text");
+                                  String text = userMenu.nextLine();
+                                  criticController.addReview(critic,bookId,text);
+                        }
+
+
+                     }while(selection != 3);
+
         }
 
 
     }
-    }
+}
