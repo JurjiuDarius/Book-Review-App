@@ -1,7 +1,6 @@
 package service;
 
-import entity.Author;
-import entity.Book;
+import entity.*;
 import lombok.AllArgsConstructor;
 import repository.Repository;
 
@@ -12,6 +11,10 @@ public class AdminService {
 
 	private AuthenticationService authenticationService;
 	private Repository<Author> authorRepository;
+	private Repository<StoreLocation> storeLocationRepository;
+	private Repository<BookStore> bookStoreRepository;
+	private Repository<Book> bookRepository;
+	private Repository<Editor> editorRepository;
 
 	public void deleteUserById(Integer id) {
 		authenticationService.deleteUser(id);
@@ -21,8 +24,10 @@ public class AdminService {
 		authorRepository.add(author);
 	}
 
-	public void addBookForAuthor(Integer authorId, Book book) {
+	public void addBookForAuthor(Integer authorId, Integer bookId) {
+
 		Author author = authorRepository.findById(authorId).get();
+		Book book=bookRepository.findById(bookId).get();
 		if (author.getBooks() == null) {
 			author.setBooks(new ArrayList<>());
 		}
@@ -30,8 +35,28 @@ public class AdminService {
 		authorRepository.update(author);
 	}
 
-	public void deleteAuthor(Integer id) {
-		authorRepository.deleteById(id);
+	public void addBookToBookStore(Integer bookId,Integer storeId){
+		BookStore bookStore = bookStoreRepository.findById(storeId).get();
+		Book book=bookRepository.findById(bookId).get();
+		if(book.getBookStores() ==null){
+			book.setBookStores(new ArrayList<>());
+		}
+		if(bookStore.getBooks() ==null){
+			bookStore.setBooks(new ArrayList<>());
+		}
+		book.getBookStores().add(bookStore);
+		bookRepository.update(book);
+	}
+
+	public void addBookToEditor(Integer bookId,Integer editorId){
+		Editor editor=editorRepository.findById(editorId).get();
+		Book book=bookRepository.findById(bookId).get();
+		if(editor.getBooks()==null){
+			editor.setBooks(new ArrayList<>());
+		}
+		editor.getBooks().add(book);
+		editorRepository.update(editor);
+
 	}
 //2
 }

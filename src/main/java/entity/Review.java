@@ -20,11 +20,11 @@ public class Review extends Identifiable {
 	@Column(name = "publication_date")
 	private Date publicationDate;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne()
 	@JoinColumn(name = "critic_id")
 	private User critic;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne()
 	@JoinColumn(name = "book_id")
 	private Book book;
 
