@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "editor")
 public class Editor extends Identifiable {
 
-	@OneToMany(mappedBy = "editor", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "editor", cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE})
 	private List<Book> books;
 
 	@Column(name = "establishment_year")

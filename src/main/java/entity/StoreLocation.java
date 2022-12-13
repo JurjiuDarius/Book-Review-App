@@ -20,7 +20,7 @@ public class StoreLocation extends Identifiable {
 	private String country;
 	private String county;
 	private String address;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE})
 	@JoinColumn(name = "store_id")
 	private BookStore bookStore;
 

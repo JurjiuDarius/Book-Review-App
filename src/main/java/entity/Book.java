@@ -18,7 +18,7 @@ public class Book extends Identifiable {
 	public String name;
 	public String description;
 	public String type;
-	@ManyToMany(cascade = {CascadeType.ALL})
+	@ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE})
 	@JoinTable(
 			name = "distribution_contract",
 			joinColumns = {@JoinColumn(name = "book_id")},
