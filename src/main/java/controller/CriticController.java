@@ -11,6 +11,6 @@ public class CriticController {
 
 	public void addReview(User critic, Integer bookId, String text){
 		criticService.addReview(critic,bookId,text);
-	}
 
+	}
 }

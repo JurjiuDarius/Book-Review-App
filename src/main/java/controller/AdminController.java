@@ -22,8 +22,16 @@ public class AdminController {
 		adminService.addAuthor(author);
 	}
 
-	public void addBookForAuth(Integer authorId, Book book){
-		adminService.addBookForAuthor(authorId,book);
+	public void addBookForAuth(Integer authorId, Integer bookId){
+		adminService.addBookForAuthor(authorId,bookId);
+	}
+
+	public void addBookToBookstore(Integer bookId, Integer bookStoreId){
+		adminService.addBookToBookStore(bookId,bookStoreId);
+	}
+
+	public void addBookToEditor(Integer bookId, Integer editorId){
+		adminService.addBookToEditor(bookId,editorId);
 	}
 
 }

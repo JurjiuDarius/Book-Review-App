@@ -1,8 +1,11 @@
 package view;
 
+import controller.ReviewController;
 import entity.Author;
+import entity.Book;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class AuthorView {
 
@@ -15,5 +18,24 @@ public class AuthorView {
 			System.out.println(author);
 		}
 	}
+
+   public Author addAuthor(){
+	   Scanner authorMenu = new Scanner(System.in);
+	   Author author;
+	   System.out.println("Author name");
+	   String name = authorMenu.nextLine();
+	   System.out.println("Author education");
+	   String education = authorMenu.nextLine();
+	   System.out.println("Author birthyear");
+	   Integer birthyear = authorMenu.nextInt();
+
+	   author = Author.builder().name(name).build();
+	   return author;
+
+	}
+
+
+
+
 
 }
