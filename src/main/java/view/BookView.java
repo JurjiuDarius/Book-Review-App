@@ -22,8 +22,6 @@ public class BookView {
 	public Book newBook(){
 		Scanner bookMenu = new Scanner(System.in);
 		Book book ;
-		System.out.println("Book id:");
-		Integer id = bookMenu.nextInt();
 		System.out.println("Book name:");
 		String name = bookMenu.nextLine();
 		System.out.println("Book Description:");
@@ -32,7 +30,7 @@ public class BookView {
 		String type = bookMenu.nextLine();
 		System.out.println("Publication year");
 		Integer publicationYear = bookMenu.nextInt();
-		book = Book.builder().id(id).name(name).description(description).type(type).publicationYear(publicationYear).build();
+		book = Book.builder().name(name).description(description).type(type).publicationYear(publicationYear).build();
 		return book;
 	}
 

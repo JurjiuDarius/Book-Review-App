@@ -29,7 +29,7 @@ public class AuthorView {
 	   System.out.println("Author birthyear");
 	   Integer birthyear = authorMenu.nextInt();
 
-	   author = Author.builder().name(name).build();
+	   author = Author.builder().name(name).education(education).birthYear(birthyear).build();
 	   return author;
 
 	}
