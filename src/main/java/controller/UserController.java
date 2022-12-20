@@ -2,19 +2,30 @@ package controller;
 
 import entity.User;
 import exception.EntityNotFoundException;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import service.AuthenticationService;
 
-import lombok.AllArgsConstructor;
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Data
 public class UserController {
 ///
 
-    private AuthenticationService authenticationService;
+	private final AuthenticationService authenticationService;
+	private User currentUser;
 
-    public User logIn(String username, String password) throws EntityNotFoundException {
-        authenticationService.logUserIn(username,password);
-        return authenticationService.logUserIn(username,password);
+	public User logIn(String username, String password) throws EntityNotFoundException {
+		currentUser = authenticationService.logUserIn(username, password);
+		return currentUser;
 
-    }
+	}
+
+	public void logOut() {
+		this.authenticationService.logOut();
+	}
+
+	public User getCurrentUser() {
+		return authenticationService.getCurrentUser();
+	}
 
 }

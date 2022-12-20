@@ -27,31 +27,29 @@ public class AdminService {
 	public void addBookForAuthor(Integer authorId, Integer bookId) {
 
 		Author author = authorRepository.findById(authorId).get();
-		Book book=bookRepository.findById(bookId).get();
-		if (author.getBooks() == null) {
-			author.setBooks(new ArrayList<>());
-		}
-		author.getBooks().add(book);
-		authorRepository.update(author);
+		Book book = bookRepository.findById(bookId).get();
+
+		book.setAuthor(author);
+		bookRepository.update(book);
 	}
 
-	public void addBookToBookStore(Integer bookId,Integer storeId){
+	public void addBookToBookStore(Integer bookId, Integer storeId) {
 		BookStore bookStore = bookStoreRepository.findById(storeId).get();
-		Book book=bookRepository.findById(bookId).get();
-		if(book.getBookStores() ==null){
+		Book book = bookRepository.findById(bookId).get();
+		if (book.getBookStores() == null) {
 			book.setBookStores(new ArrayList<>());
 		}
-		if(bookStore.getBooks() ==null){
+		if (bookStore.getBooks() == null) {
 			bookStore.setBooks(new ArrayList<>());
 		}
 		book.getBookStores().add(bookStore);
 		bookRepository.update(book);
 	}
 
-	public void addBookToEditor(Integer bookId,Integer editorId){
-		Editor editor=editorRepository.findById(editorId).get();
-		Book book=bookRepository.findById(bookId).get();
-		if(editor.getBooks()==null){
+	public void addBookToEditor(Integer bookId, Integer editorId) {
+		Editor editor = editorRepository.findById(editorId).get();
+		Book book = bookRepository.findById(bookId).get();
+		if (editor.getBooks() == null) {
 			editor.setBooks(new ArrayList<>());
 		}
 		editor.getBooks().add(book);

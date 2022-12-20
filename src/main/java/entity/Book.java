@@ -20,7 +20,7 @@ public class Book extends Identifiable {
 	public String name;
 	public String description;
 	public String type;
-	@ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE})
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE})
 	@JoinTable(
 			name = "distribution_contract",
 			joinColumns = {@JoinColumn(name = "book_id")},
@@ -28,7 +28,7 @@ public class Book extends Identifiable {
 			}
 	)
 	List<BookStore> bookStores;
-	@ManyToOne()
+	@ManyToOne(cascade = {})
 	@JoinColumn(name = "author_id")
 	private Author author;
 	@Column(name = "publication_year")

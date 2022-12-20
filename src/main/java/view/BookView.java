@@ -1,9 +1,7 @@
 package view;
 
 import entity.Book;
-import entity.BookStore;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,9 +17,9 @@ public class BookView {
 		}
 	}
 
-	public Book newBook(){
+	public Book newBook() {
 		Scanner bookMenu = new Scanner(System.in);
-		Book book ;
+		Book book;
 		System.out.println("Book name:");
 		String name = bookMenu.nextLine();
 		System.out.println("Book Description:");
