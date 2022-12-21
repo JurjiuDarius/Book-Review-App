@@ -53,5 +53,9 @@ public class BookController {
 			bookView.displayBook(bookOptional.get());
 		}
 	}
+	public void createBook(){
+		Book book = bookView.newBook();
+		bookRepository.add(book);
+	}
 
 }
