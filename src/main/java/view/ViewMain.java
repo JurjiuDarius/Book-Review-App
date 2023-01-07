@@ -48,18 +48,26 @@ public class ViewMain {
         ReviewController reviewController = new ReviewController(reviewRepository, reviewView);
         StoreLocationController storeLocationController = new StoreLocationController(storeLocationRepository, storeLocationView);
 
-        boolean isLoggedIn = false;
-        ;
+
+
         while (true) {
             Scanner input = new Scanner(System.in);
+            System.out.println("1. Create account");
+            System.out.println("2. Log in");
+            int choose = input.nextInt();
+            input.nextLine();
+            if(choose == 1) {
+                createAccount();
+            }else if(choose == 2){
+
             System.out.println("Username:");
             String username = input.nextLine();
             System.out.println("Password:");
             String password = input.nextLine();
             User user = userController.logIn(username, password);
-            isLoggedIn = true;
 
-            if (isLoggedIn) {
+
+
                 switch (user.getAuthority()) {
                     case ADMIN: {
                         adminMenu(bookController, authorController, bookStoreController, criticController, editorController, reviewController, storeLocationController, adminController, bookView, authorView, bookStoreView, editorView);
@@ -80,6 +88,7 @@ public class ViewMain {
                         System.out.println("There is no user");
                     }
                 }
+                break;
 
             }
         }
@@ -107,9 +116,56 @@ public class ViewMain {
 
             switch (menu) {
                 case 1:
-                    displayMenu(bookController, authorController, bookStoreController, editorController, reviewController, storeLocationController);
+                    int case1;
+                    Scanner displayMenu = new Scanner(System.in);
+                    System.out.println("1. Display Books");
+                    System.out.print("2. Display Authors");
+                    System.out.println("3. Display Bookstores");
+                    System.out.println("4. Display Editors");
+                    System.out.println("5. Display Reviews");
+                    System.out.println("6. Display Store Locations");
+                    System.out.println("7. Back");
+                    case1 = displayMenu.nextInt();
+                    switch (case1) {
+
+                        case 1:
+                            System.out.println("Books: ");
+                            bookController.displayAll();
+                            break;
+                        case 2:
+                            System.out.println("Authors: ");
+                            authorController.displayAll();
+                            break;
+                        case 3:
+                            System.out.println("Book Stores: ");
+                            bookStoreController.displayAll();
+                            break;
+                        case 4:
+                            System.out.println("Editors: ");
+                            editorController.displayAll();
+                            break;
+                        case 5:
+                            System.out.println("Reviews: ");
+                            reviewController.displayAll();
+                            break;
+                        case 6:
+                            System.out.println("Store Locations: ");
+                            storeLocationController.displayAll();
+                            break;
+                        case 7:
+                            System.out.println("1. Display menu");
+                            System.out.println("2. Add Book for Author");
+                            System.out.println("3. Add Book to Bookstore");
+                            System.out.println("4. Add Book to editor");
+                            System.out.println("5. Delete User");
+                            System.out.println("6. Add Menu");
+                            System.out.println("6. Quit");
+                            break;
+                    }
+
 
                     break;
+
 
                 case 2:
                     System.out.println("Author id for adding book: ");
@@ -252,7 +308,50 @@ public class ViewMain {
 
             switch (cm) {
                 case 1:
-                    displayMenu(bookController, authorController, bookStoreController, editorController, reviewController, storeLocationController);
+                    int case1;
+                    Scanner displayMenu = new Scanner(System.in);
+                    System.out.println("1. Display Books");
+                    System.out.print("2. Display Authors");
+                    System.out.println("3. Display Bookstores");
+                    System.out.println("4. Display Editors");
+                    System.out.println("5. Display Reviews");
+                    System.out.println("6. Display Store Locations");
+                    System.out.println("7. Back");
+                    case1 = displayMenu.nextInt();
+                    switch (case1) {
+
+                        case 1:
+                            System.out.println("Books: ");
+                            bookController.displayAll();
+                            break;
+                        case 2:
+                            System.out.println("Authors: ");
+                            authorController.displayAll();
+                            break;
+                        case 3:
+                            System.out.println("Book Stores: ");
+                            bookStoreController.displayAll();
+                            break;
+                        case 4:
+                            System.out.println("Editors: ");
+                            editorController.displayAll();
+                            break;
+                        case 5:
+                            System.out.println("Reviews: ");
+                            reviewController.displayAll();
+                            break;
+                        case 6:
+                            System.out.println("Store Locations: ");
+                            storeLocationController.displayAll();
+                            break;
+                        case 7:
+                            System.out.println("1. Display menu");
+                            System.out.println("2. Add Review for Book");
+                            System.out.println("3. Quit");
+                            break;
+                    }
+
+
                     break;
 
                 case 2:
@@ -269,49 +368,19 @@ public class ViewMain {
 
     }
 
-    public static void displayMenu(BookController bookController, AuthorController authorController, BookStoreController bookStoreController, EditorController editorController, ReviewController reviewController, StoreLocationController storeLocationController) {
-        int case1;
-        Scanner displayMenu = new Scanner(System.in);
-        System.out.println("1. Display Books");
-        System.out.print("2. Display Authors");
-        System.out.println("3. Display Bookstores");
-        System.out.println("4. Display Editors");
-        System.out.println("5. Display Reviews");
-        System.out.println("6. Display Store Locations");
-        System.out.println("7. Back");
-        case1 = displayMenu.nextInt();
-        switch (case1) {
-
-            case 1:
-                System.out.println("Books: ");
-                bookController.displayAll();
-                break;
-            case 2:
-                System.out.println("Authors: ");
-                authorController.displayAll();
-                break;
-            case 3:
-                System.out.println("Book Stores: ");
-                bookStoreController.displayAll();
-                break;
-            case 4:
-                System.out.println("Editors: ");
-                editorController.displayAll();
-                break;
-            case 5:
-                System.out.println("Reviews: ");
-                reviewController.displayAll();
-                break;
-            case 6:
-                System.out.println("Store Locations: ");
-                storeLocationController.displayAll();
-                break;
-            case 7:
-                break;
-        }
-
+    public static void createAccount(){
+        Scanner input = new Scanner(System.in);
+        User user;
+        System.out.println("Enter username:");
+        String username = input.nextLine();
+        System.out.println("Enter password:");
+        String password = input.nextLine();
+        System.out.println("Enter Birth year: ");
+        Integer birthYear = input.nextInt();
+        user = User.builder().username(username).password(password).birthYear(birthYear).build();
 
     }
+
 
 }
 
