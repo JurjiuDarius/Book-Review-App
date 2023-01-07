@@ -8,9 +8,7 @@ import exception.EntityNotFoundException;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import repository.Repository;
-import service.AdminService;
-import service.AuthenticationService;
-import service.CriticService;
+import service.*;
 
 import java.util.Scanner;
 
@@ -30,6 +28,12 @@ public class ViewMain {
         AuthenticationService authenticationService = new AuthenticationService(userRepository);
         AdminService adminService = new AdminService(authenticationService, authorRepository, storeLocationRepository, bookStoreRepository, bookRepository, editorRepository);
         CriticService criticService = new CriticService(bookRepository, reviewRepository, userRepository);
+        BookService bookService = new BookService(bookRepository);
+        AuthorService authorService = new AuthorService(authorRepository);
+        BookStoreService bookStoreService = new BookStoreService(bookStoreRepository);
+        StoreLocationService storeLocationService = new StoreLocationService(storeLocationRepository);
+        ReviewService reviewService = new ReviewService(reviewRepository);
+        EditorService editorService = new EditorService(editorRepository);
 
         BookView bookView = new BookView();
         AuthorView authorView = new AuthorView();
@@ -41,12 +45,12 @@ public class ViewMain {
         UserController userController = new UserController(authenticationService);
         CriticController criticController = new CriticController(criticService);
         AdminController adminController = new AdminController(adminService);
-        BookController bookController = new BookController(bookRepository, bookView);
-        AuthorController authorController = new AuthorController(authorRepository, authorView);
-        BookStoreController bookStoreController = new BookStoreController(bookStoreRepository, bookStoreView);
-        EditorController editorController = new EditorController(editorRepository, editorView);
-        ReviewController reviewController = new ReviewController(reviewRepository, reviewView);
-        StoreLocationController storeLocationController = new StoreLocationController(storeLocationRepository, storeLocationView);
+        BookController bookController = new BookController(bookService, bookView);
+        AuthorController authorController = new AuthorController(authorService, authorView);
+        BookStoreController bookStoreController = new BookStoreController(bookStoreService, bookStoreView);
+        EditorController editorController = new EditorController(editorService, editorView);
+        ReviewController reviewController = new ReviewController(reviewService, reviewView);
+        StoreLocationController storeLocationController = new StoreLocationController(storeLocationService, storeLocationView);
 
 
         while (true) {

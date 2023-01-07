@@ -4,6 +4,7 @@ import entity.Book;
 import entity.Review;
 import entity.User;
 import enums.AuthorityEnum;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import repository.Repository;
 
@@ -18,19 +19,23 @@ public class CriticService {
     private Repository<Review> reviewRepository;
     private Repository<User> criticRepository;
 
-    public void addUser(User critic) {
-        criticRepository.add(critic);
+    public User add(User critic) {
+        return criticRepository.add(critic);
     }
 
-    public void updateUser(User critic) {
-        criticRepository.update(critic);
+    public User update(User critic) {
+        return criticRepository.update(critic);
     }
 
-    public void deleteUser(Integer id) {
+    public void deleteById(Integer id) {
         criticRepository.deleteById(id);
     }
 
-    public List<User> getAllUsers(Integer id) {
+    public User findById(Integer id) {
+        return criticRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Critic not found!"));
+    }
+
+    public List<User> findAll(Integer id) {
         return criticRepository.findAll().stream().filter(user -> user.getAuthority().equals(AuthorityEnum.CRITIC)).collect(Collectors.toList());
     }
 

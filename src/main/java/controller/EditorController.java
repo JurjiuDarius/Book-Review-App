@@ -2,18 +2,16 @@ package controller;
 
 import entity.Editor;
 import exception.BadValueException;
-import repository.Repository;
+import service.EditorService;
 import view.EditorView;
-
-import java.util.Optional;
 
 public class EditorController {
 
-    private final Repository<Editor> editorRepository;
+    private final EditorService editorService;
     private final EditorView editorView;
 
-    public EditorController(Repository<Editor> repository, EditorView editorView) {
-        this.editorRepository = repository;
+    public EditorController(EditorService editorService, EditorView editorView) {
+        this.editorService = editorService;
         this.editorView = editorView;
     }
 
@@ -22,35 +20,31 @@ public class EditorController {
             throw new BadValueException("Ids are positive numbers");
         }
 
-        return editorRepository.add(editor);
+        return editorService.add(editor);
     }
 
     public Editor updateEditor(Editor editor) throws BadValueException {
         if (editor.getId() < 0) {
             throw new BadValueException("Ids are positive numbers");
         }
-        return editorRepository.update(editor);
+        return editorService.update(editor);
     }
 
     public void deleteEditorById(int id) throws BadValueException {
         if (id < 0) {
             throw new BadValueException("Ids are positive numbers");
         }
-        editorRepository.deleteById(id);
+        editorService.deleteById(id);
     }
 
     public void displayAll() {
-        editorView.displayEditors(editorRepository.findAll());
+        editorView.displayEditors(editorService.findAll());
     }
 
     public void displayById(int id) throws BadValueException {
-        Optional<Editor> editorOptional = editorRepository.findById(id);
-        if (id < 0) {
-            throw new BadValueException("Ids are positive numbers");
-        }
-        if (!editorOptional.isEmpty()) {
-            editorView.displayEditor(editorOptional.get());
-        }
+
+        editorView.displayEditor(editorService.findById(id));
+
     }
 
 }

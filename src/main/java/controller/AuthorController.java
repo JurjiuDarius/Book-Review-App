@@ -2,20 +2,16 @@ package controller;
 
 import entity.Author;
 import exception.BadValueException;
-import repository.Repository;
+import service.AuthorService;
 import view.AuthorView;
-
-import java.util.Comparator;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class AuthorController {
 
-    private final Repository<Author> authorRepository;
+    private final AuthorService authorService;
     private final AuthorView authorView;
 
-    public AuthorController(Repository<Author> repository, AuthorView authorView) {
-        this.authorRepository = repository;
+    public AuthorController(AuthorService authorService, AuthorView authorView) {
+        this.authorService = authorService;
         this.authorView = authorView;
     }
 
@@ -24,52 +20,46 @@ public class AuthorController {
             throw new BadValueException("Ids are positive numbers");
         }
 
-        return authorRepository.add(author);
+        return authorService.add(author);
     }
 
     public Author updateAuthor(Author author) throws BadValueException {
         if (author.getId() < 0) {
             throw new BadValueException("Ids are positive numbers");
         }
-        return authorRepository.update(author);
+        return authorService.update(author);
     }
 
     public void deleteAuthorById(int id) throws BadValueException {
         if (id < 0) {
             throw new BadValueException("Ids are positive numbers");
         }
-        authorRepository.deleteById(id);
+        authorService.deleteById(id);
     }
 
     public void displayAll() {
 
-        authorView.displayAuthors(authorRepository.findAll());
+        authorView.displayAuthors(authorService.findAll());
     }
 
     public void displayById(int id) throws BadValueException {
-        Optional<Author> authorOptional = authorRepository.findById(id);
-        if (id < 0) {
-            throw new BadValueException("Ids are positive numbers");
-        }
-        if (!authorOptional.isEmpty()) {
-            authorView.displayAuthor(authorOptional.get());
-        }
+        authorView.displayAuthor(authorService.findById(id));
     }
 
     public void authorsOlderThan(int year) {
-        authorView.displayAuthors(authorRepository.findAll().stream().filter(el -> el.getBirthYear() > year).collect(Collectors.toList()));
+        authorView.displayAuthors(authorService.authorsOlderThan(year));
     }
 
     public void authorsSortedByYear() {
-        authorView.displayAuthors(authorRepository.findAll().stream().sorted(Comparator.comparingInt(Author::getBirthYear)).collect(Collectors.toList()));
+        authorView.displayAuthors(authorService.authorsSortedByYear());
     }
 
     public void authorsSortedByName() {
-        authorView.displayAuthors(authorRepository.findAll().stream().sorted(Comparator.comparing(Author::getName)).collect(Collectors.toList()));
+        authorView.displayAuthors(authorService.authorsSortedByName());
     }
 
     public void authorsSortedByBooks() {
-        authorView.displayAuthors(authorRepository.findAll().stream().sorted(Comparator.comparingInt(author -> author.getBooks().size())).collect(Collectors.toList()));
+        authorView.displayAuthors(authorService.authorsSortedByBooks());
     }
 
 }

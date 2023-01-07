@@ -1,6 +1,7 @@
 package service;
 
 import entity.BookStore;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import repository.Repository;
 
@@ -11,19 +12,23 @@ public class BookStoreService {
 
     private Repository<BookStore> bookStoreRepository;
 
-    public void addBookStore(BookStore bookStore) {
-        bookStoreRepository.add(bookStore);
+    public BookStore add(BookStore bookStore) {
+        return bookStoreRepository.add(bookStore);
     }
 
-    public void updateBookStore(BookStore bookStore) {
-        bookStoreRepository.update(bookStore);
+    public BookStore update(BookStore bookStore) {
+        return bookStoreRepository.update(bookStore);
     }
 
-    public void deleteBookStore(Integer id) {
+    public void deleteById(Integer id) {
         bookStoreRepository.deleteById(id);
     }
 
-    public List<BookStore> getAllBookStores(Integer id) {
+    public BookStore findById(Integer id) {
+        return bookStoreRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("BookStore not found!"));
+    }
+
+    public List<BookStore> findAll() {
         return bookStoreRepository.findAll();
     }
 
