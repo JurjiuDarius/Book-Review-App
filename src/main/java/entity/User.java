@@ -15,12 +15,12 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "app_user")
 public class User extends Identifiable {
 
-	public String username;
-	public String password;
-	@Column(name = "birth_year")
-	public Integer birthYear;
-	@Enumerated(EnumType.STRING)
-	public AuthorityEnum authority;
+    public String username;
+    public String password;
+    @Column(name = "birth_year")
+    public Integer birthYear;
+    @Enumerated(EnumType.STRING)
+    public AuthorityEnum authority;
 
 }
 

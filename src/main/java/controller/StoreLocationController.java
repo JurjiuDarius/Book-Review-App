@@ -9,51 +9,51 @@ import java.util.Optional;
 
 public class StoreLocationController {
 
-	private final Repository<StoreLocation> storeLocationRepository;
-	private final StoreLocationView storeLocationView;
+    private final Repository<StoreLocation> storeLocationRepository;
+    private final StoreLocationView storeLocationView;
 
-	public StoreLocationController(Repository<StoreLocation> repository, StoreLocationView storeLocationView) {
-		this.storeLocationRepository = repository;
-		this.storeLocationView = storeLocationView;
-	}
+    public StoreLocationController(Repository<StoreLocation> repository, StoreLocationView storeLocationView) {
+        this.storeLocationRepository = repository;
+        this.storeLocationView = storeLocationView;
+    }
 
-	public StoreLocation addStoreLocation(StoreLocation storeLocation) throws BadValueException {
-		if (storeLocation.getId() < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
+    public StoreLocation addStoreLocation(StoreLocation storeLocation) throws BadValueException {
+        if (storeLocation.getId() < 0) {
+            throw new BadValueException("Ids are positive numbers");
+        }
 
-		return storeLocationRepository.add(storeLocation);
-	}
+        return storeLocationRepository.add(storeLocation);
+    }
 
-	public StoreLocation updateStoreLocation(StoreLocation storeLocation) throws BadValueException {
-		if (storeLocation.getId() < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
-		return storeLocationRepository.update(storeLocation);
-	}
+    public StoreLocation updateStoreLocation(StoreLocation storeLocation) throws BadValueException {
+        if (storeLocation.getId() < 0) {
+            throw new BadValueException("Ids are positive numbers");
+        }
+        return storeLocationRepository.update(storeLocation);
+    }
 
-	public void deleteStoreLocationById(int id) throws BadValueException {
-		if (id < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
+    public void deleteStoreLocationById(int id) throws BadValueException {
+        if (id < 0) {
+            throw new BadValueException("Ids are positive numbers");
+        }
 
-		storeLocationRepository.deleteById(id);
-	}
+        storeLocationRepository.deleteById(id);
+    }
 
-	public void displayAll() {
+    public void displayAll() {
 
-		storeLocationView.displayStoreLocations(storeLocationRepository.findAll());
-	}
+        storeLocationView.displayStoreLocations(storeLocationRepository.findAll());
+    }
 
-	public void displayById(int id) throws BadValueException {
-		Optional<StoreLocation> storeLocationOptional = storeLocationRepository.findById(id);
-		if (id < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
-		if (!storeLocationOptional.isEmpty()) {
-			storeLocationView.displayStoreLocation(storeLocationOptional.get());
-		}
-	}
+    public void displayById(int id) throws BadValueException {
+        Optional<StoreLocation> storeLocationOptional = storeLocationRepository.findById(id);
+        if (id < 0) {
+            throw new BadValueException("Ids are positive numbers");
+        }
+        if (!storeLocationOptional.isEmpty()) {
+            storeLocationView.displayStoreLocation(storeLocationOptional.get());
+        }
+    }
 
 }
 

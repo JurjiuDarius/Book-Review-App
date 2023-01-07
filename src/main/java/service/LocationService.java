@@ -9,22 +9,22 @@ import java.util.List;
 @AllArgsConstructor
 public class LocationService {
 
-	private Repository<StoreLocation> storeLocationRepository;
+    private Repository<StoreLocation> storeLocationRepository;
 
-	public void addStoreLocation(StoreLocation storeLocation) {
-		storeLocationRepository.add(storeLocation);
-	}
+    public void addStoreLocation(StoreLocation storeLocation) {
+        storeLocationRepository.add(storeLocation);
+    }
 
-	public void updateStoreLocation(StoreLocation storeLocation) {
-		storeLocationRepository.update(storeLocation);
-	}
+    public void updateStoreLocation(StoreLocation storeLocation) {
+        storeLocationRepository.update(storeLocation);
+    }
 
-	public void deleteStoreLocation(Integer id) {
-		storeLocationRepository.deleteById(id);
-	}
+    public void deleteStoreLocation(Integer id) {
+        storeLocationRepository.deleteById(id);
+    }
 
-	public List<StoreLocation> getAllStoreLocations(Integer id) {
-		return storeLocationRepository.findAll();
-	}
+    public List<StoreLocation> getAllStoreLocations(Integer id) {
+        return storeLocationRepository.findAll();
+    }
 
 }

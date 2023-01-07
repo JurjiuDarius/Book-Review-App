@@ -11,21 +11,21 @@ import service.AuthenticationService;
 public class UserController {
 ///
 
-	private final AuthenticationService authenticationService;
-	private User currentUser;
+    private final AuthenticationService authenticationService;
+    private User currentUser;
 
-	public User logIn(String username, String password) throws EntityNotFoundException {
-		currentUser = authenticationService.logUserIn(username, password);
-		return currentUser;
+    public User logIn(String username, String password) throws EntityNotFoundException {
+        currentUser = authenticationService.logUserIn(username, password);
+        return currentUser;
 
-	}
+    }
 
-	public void logOut() {
-		this.authenticationService.logOut();
-	}
+    public void logOut() {
+        this.authenticationService.logOut();
+    }
 
-	public User getCurrentUser() {
-		return authenticationService.getCurrentUser();
-	}
+    public User getCurrentUser() {
+        return authenticationService.getCurrentUser();
+    }
 
 }

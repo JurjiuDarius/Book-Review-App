@@ -10,7 +10,7 @@
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="jakarta.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
             <property name="jakarta.persistence.jdbc.url"
-                      value="jdbc:sqlserver://localhost\SQLEXPRESS01;database=BookReview;trustServerCertificate=true;"/>
+                      value="jdbc:sqlserver://DESKTOP-KM3GGLM\MSSQLSERVER:1433;database=BookReview;encrypt=true;trustServerCertificate=true;"/>
             <property name="jakarta.persistence.jdbc.user" value="user"/>
             <property name="jakarta.persistence.jdbc.password" value="password"/>
         </properties>

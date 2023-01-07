@@ -9,22 +9,22 @@ import java.util.List;
 @AllArgsConstructor
 public class EditorService {
 
-	private Repository<Editor> editorRepository;
+    private Repository<Editor> editorRepository;
 
-	public void addEditor(Editor editor) {
-		editorRepository.add(editor);
-	}
+    public void addEditor(Editor editor) {
+        editorRepository.add(editor);
+    }
 
-	public void updateEditor(Editor editor) {
-		editorRepository.update(editor);
-	}
+    public void updateEditor(Editor editor) {
+        editorRepository.update(editor);
+    }
 
-	public void deleteEditor(Integer id) {
-		editorRepository.deleteById(id);
-	}
+    public void deleteEditor(Integer id) {
+        editorRepository.deleteById(id);
+    }
 
-	public List<Editor> getAllEditors(Integer id) {
-		return editorRepository.findAll();
-	}
+    public List<Editor> getAllEditors(Integer id) {
+        return editorRepository.findAll();
+    }
 
 }

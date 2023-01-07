@@ -7,14 +7,14 @@ import java.util.Optional;
 
 public interface CrudRepositoryInterface<T extends Identifiable> {
 
-	List<T> findAll();
+    List<T> findAll();
 
-	Optional<T> findById(Integer id);
+    Optional<T> findById(Integer id);
 
-	void deleteById(Integer id);
+    void deleteById(Integer id);
 
-	T update(T element);
+    T update(T element);
 
-	T add(T element);
+    T add(T element);
 
 }
