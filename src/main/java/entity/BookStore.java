@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @Data
+@ToString(exclude = "books")
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
@@ -28,10 +30,5 @@ public class BookStore extends Identifiable {
 
     private String name;
 
-    public BookStore(int id, int id1, List<StoreLocation> locations, int establishmentYear) {
-        super(id);
-        this.id = id1;
-        this.establishmentYear = establishmentYear;
-    }
 
 }

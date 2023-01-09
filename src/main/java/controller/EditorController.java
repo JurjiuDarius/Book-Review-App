@@ -3,16 +3,19 @@ package controller;
 import entity.Editor;
 import exception.BadValueException;
 import service.EditorService;
+import view.BookView;
 import view.EditorView;
 
 public class EditorController {
 
     private final EditorService editorService;
     private final EditorView editorView;
+    private final BookView bookView;
 
-    public EditorController(EditorService editorService, EditorView editorView) {
+    public EditorController(EditorService editorService, EditorView editorView, BookView bookView) {
         this.editorService = editorService;
         this.editorView = editorView;
+        this.bookView = bookView;
     }
 
     public Editor addEditor(Editor editor) throws BadValueException {
@@ -46,6 +49,11 @@ public class EditorController {
         editorView.displayEditor(editorService.findById(id));
 
     }
+
+    public void displayBooksForEditor(String name) throws BadValueException {
+        bookView.displayBooks(editorService.booksForEditor(name));
+    }
+
 
 }
 

@@ -1,11 +1,14 @@
 package service;
 
+import entity.Book;
 import entity.Editor;
+import exception.BadValueException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import repository.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class EditorService {
@@ -30,6 +33,14 @@ public class EditorService {
 
     public List<Editor> findAll() {
         return editorRepository.findAll();
+    }
+
+    public List<Book> booksForEditor(String name) throws BadValueException {
+        List<Editor> editors = editorRepository.findAll().stream().filter(editor1 -> editor1.getName().equals(name)).collect(Collectors.toList());
+        if (editors.isEmpty()) {
+            throw new BadValueException("Editor does not exist");
+        }
+        return editors.get(0).getBooks();
     }
 
 }

@@ -4,15 +4,18 @@ import entity.BookStore;
 import exception.BadValueException;
 import service.BookStoreService;
 import view.BookStoreView;
+import view.BookView;
 
 public class BookStoreController {
 
     private final BookStoreService bookStoreService;
     private final BookStoreView bookStoreView;
+    private final BookView bookView;
 
-    public BookStoreController(BookStoreService bookStoreService, BookStoreView bookStoreView) {
+    public BookStoreController(BookStoreService bookStoreService, BookStoreView bookStoreView, BookView bookView) {
         this.bookStoreService = bookStoreService;
         this.bookStoreView = bookStoreView;
+        this.bookView = bookView;
     }
 
     public BookStore addBookStore(BookStore bookStore) throws BadValueException {
@@ -43,9 +46,11 @@ public class BookStoreController {
     }
 
     public void displayById(int id) throws BadValueException {
-
         bookStoreView.displayBookStore(bookStoreService.findById(id));
+    }
 
+    public void displayBooksForStore(String name) throws BadValueException {
+        bookView.displayBooks(bookStoreService.booksForBookStore(name));
     }
 
 }

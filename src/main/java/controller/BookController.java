@@ -16,7 +16,7 @@ public class BookController {
     }
 
     public Book addBook(Book book) throws BadValueException {
-        if (book.id < 0) {
+        if (book.getId() < 0) {
             throw new BadValueException("Ids are positive numbers");
         }
 
@@ -24,7 +24,7 @@ public class BookController {
     }
 
     public Book updateBook(Book book) throws BadValueException {
-        if (book.id < 0) {
+        if (book.getId() < 0) {
             throw new BadValueException("Ids are positive numbers");
         }
         return bookService.update(book);

@@ -1,6 +1,8 @@
 package service;
 
+import entity.Book;
 import entity.BookStore;
+import exception.BadValueException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import repository.Repository;
@@ -30,6 +32,16 @@ public class BookStoreService {
 
     public List<BookStore> findAll() {
         return bookStoreRepository.findAll();
+    }
+
+    public List<Book> booksForBookStore(String name) throws BadValueException {
+        List<BookStore> bookStores = bookStoreRepository.findAll().stream().filter(store -> store.getName().equals(name)).toList();
+        if (bookStores.isEmpty()) {
+            throw new BadValueException("Store name does not exist");
+        }
+
+        return bookStores.get(0).getBooks();
+
     }
 
 }

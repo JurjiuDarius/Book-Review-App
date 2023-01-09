@@ -1,11 +1,8 @@
 package SiteBook;
 
-import entity.Book;
-import entity.Review;
-import entity.User;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import repository.Repository;
+import view.ViewMain;
 
 public class Main {
 
@@ -30,13 +27,15 @@ public class Main {
 //		Repository<Book> bookRepository=new Repository<>(emf.createEntityManager(),"Book");
 //		Repository<Author> authorRepository=new Repository<>(emf.createEntityManager(),"Author");
 //		authorRepository.update(author1);
-        Repository<User> userRepository = new Repository<>(emf.createEntityManager(), "User");
-        Repository<Book> bookRepository = new Repository<>(emf.createEntityManager(), "Book");
-        Repository<Review> reviewRepository = new Repository<>(emf.createEntityManager(), "Review");
-        User critic = userRepository.findById(2).get();
-        Book book = bookRepository.findById(2452).get();
-        Review review = Review.builder().critic(critic).book(book).text("A great book also has a movie").build();
-        System.out.println(book.getReviews());
+//        Repository<User> userRepository = new Repository<>(emf.createEntityManager(), "User");
+//        Repository<Book> bookRepository = new Repository<>(emf.createEntityManager(), "Book");
+//        Repository<Review> reviewRepository = new Repository<>(emf.createEntityManager(), "Review");
+//        User critic = userRepository.findById(2).get();
+//        Book book = bookRepository.findById(2452).get();
+//        Review review = Review.builder().critic(critic).book(book).text("A great book also has a movie").build();
+//        System.out.println(book.getReviews());
+
+        ViewMain.mainView();
 
 
     }

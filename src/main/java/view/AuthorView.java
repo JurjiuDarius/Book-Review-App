@@ -8,13 +8,11 @@ import java.util.Scanner;
 public class AuthorView {
 
     public void displayAuthor(Author author) {
-        System.out.print(author.getId() + " ");
         System.out.println(author);
     }
 
     public void displayAuthors(List<Author> authors) {
         for (Author author : authors) {
-            System.out.print(author.getId() + " ");
             System.out.println(author);
         }
     }

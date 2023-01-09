@@ -18,6 +18,7 @@ import java.util.List;
 @Table(name = "author")
 public class Author extends Identifiable {
 
+    private int id;
     private String name;
     private String education;
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)

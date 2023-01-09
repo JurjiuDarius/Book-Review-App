@@ -14,24 +14,22 @@ import java.util.Scanner;
 
 public class ViewMain {
 
-    public static void main(String[] args) throws EntityNotFoundException, BadValueException {
+    public static void mainView() {
         AuthorityEnum authorityEnum = null;
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("BookReviewApp");
         Repository<Author> authorRepository = new Repository<>(emf.createEntityManager(), "Author");
         Repository<Editor> editorRepository = new Repository<>(emf.createEntityManager(), "Editor");
-        Repository<StoreLocation> storeLocationRepository = new Repository<>(emf.createEntityManager(), "StoreLocation");
         Repository<Book> bookRepository = new Repository<>(emf.createEntityManager(), "Book");
         Repository<Review> reviewRepository = new Repository<>(emf.createEntityManager(), "Review");
         Repository<BookStore> bookStoreRepository = new Repository<>(emf.createEntityManager(), "BookStore");
         Repository<User> userRepository = new Repository<>(emf.createEntityManager(), "User");
 
         AuthenticationService authenticationService = new AuthenticationService(userRepository);
-        AdminService adminService = new AdminService(authenticationService, authorRepository, storeLocationRepository, bookStoreRepository, bookRepository, editorRepository);
+        AdminService adminService = new AdminService(authenticationService, authorRepository, bookStoreRepository, bookRepository, editorRepository);
         CriticService criticService = new CriticService(bookRepository, reviewRepository, userRepository);
         BookService bookService = new BookService(bookRepository);
         AuthorService authorService = new AuthorService(authorRepository);
         BookStoreService bookStoreService = new BookStoreService(bookStoreRepository);
-        StoreLocationService storeLocationService = new StoreLocationService(storeLocationRepository);
         ReviewService reviewService = new ReviewService(reviewRepository);
         EditorService editorService = new EditorService(editorRepository);
 
@@ -40,63 +38,57 @@ public class ViewMain {
         BookStoreView bookStoreView = new BookStoreView();
         EditorView editorView = new EditorView();
         ReviewView reviewView = new ReviewView();
-        StoreLocationView storeLocationView = new StoreLocationView();
 
         UserController userController = new UserController(authenticationService);
         CriticController criticController = new CriticController(criticService);
         AdminController adminController = new AdminController(adminService);
         BookController bookController = new BookController(bookService, bookView);
         AuthorController authorController = new AuthorController(authorService, authorView);
-        BookStoreController bookStoreController = new BookStoreController(bookStoreService, bookStoreView);
-        EditorController editorController = new EditorController(editorService, editorView);
+        BookStoreController bookStoreController = new BookStoreController(bookStoreService, bookStoreView, bookView);
+        EditorController editorController = new EditorController(editorService, editorView, bookView);
         ReviewController reviewController = new ReviewController(reviewService, reviewView);
-        StoreLocationController storeLocationController = new StoreLocationController(storeLocationService, storeLocationView);
+        Scanner input = new Scanner(System.in);
 
+        int choose = 0;
+        while (choose != 3) {
+            System.out.println("1. Create account");
+            System.out.println("2. Log in");
+            System.out.println("3. Quit");
+            choose = input.nextInt();
+            input.nextLine();
+            if (choose == 1) {
+                createAccount(authenticationService);
+            } else if (choose == 2) {
 
-        while (true) {
-            Scanner input = new Scanner(System.in);
-
-            int choose = 0;
-            while (choose != 3) {
-                System.out.println("1. Create account");
-                System.out.println("2. Log in");
-                System.out.println("3. Quit");
-                choose = input.nextInt();
-                input.nextLine();
-                if (choose == 1) {
-                    createAccount(authenticationService);
-                } else if (choose == 2) {
-
-                    System.out.println("Username:");
-                    String username = input.nextLine();
-                    System.out.println("Password:");
-                    String password = input.nextLine();
+                System.out.println("Username:");
+                String username = input.nextLine();
+                System.out.println("Password:");
+                String password = input.nextLine();
+                try {
                     User user = userController.logIn(username, password);
 
 
                     switch (user.getAuthority()) {
                         case ADMIN: {
-                            adminMenu(bookController, authorController, bookStoreController, criticController, editorController, reviewController, storeLocationController, adminController, bookView, authorView, bookStoreView, editorView);
+                            adminMenu(bookController, authorController, bookStoreController, criticController, editorController, reviewController, adminController, bookView, authorView, bookStoreView, editorView);
 
                             break;
                         }
                         case VIEWER: {
-                            displayMenu(bookController, authorController, editorController, bookStoreController, reviewController,
-                                    storeLocationController);
+                            displayMenu(bookController, authorController, editorController, bookStoreController, reviewController);
                             break;
                         }
 
                         case CRITIC: {
-                            criticMenu(userController, bookController, authorController, bookStoreController, criticController, editorController, reviewController, storeLocationController, adminController, bookView);
+                            criticMenu(userController, bookController, authorController, bookStoreController, criticController, editorController, reviewController, adminController, bookView);
                             break;
                         }
-
                         default: {
                             System.out.println("There is no user");
                         }
                     }
-                    break;
-
+                } catch (EntityNotFoundException e) {
+                    System.out.println("The user does not exist!");
                 }
             }
         }
@@ -104,8 +96,7 @@ public class ViewMain {
 
     public static void adminMenu(BookController bookController, AuthorController authorController, BookStoreController
             bookStoreController, CriticController criticController, EditorController
-                                         editorController, ReviewController reviewController, StoreLocationController
-                                         storeLocationController, AdminController adminController, BookView bookView, AuthorView authorView,
+                                         editorController, ReviewController reviewController, AdminController adminController, BookView bookView, AuthorView authorView,
                                  BookStoreView bookStoreView,
                                  EditorView editorView) {
         Scanner adminMenu = new Scanner(System.in);
@@ -115,7 +106,7 @@ public class ViewMain {
             System.out.println("1. Display menu");
             System.out.println("2. Add Book for Author");
             System.out.println("3. Add Book to Bookstore");
-            System.out.println("4. Add Book to editor");
+            System.out.println("4. Add Book to Editor");
             System.out.println("5. Delete User");
             System.out.println("6. Add Menu");
             System.out.println("7. Quit");
@@ -124,8 +115,7 @@ public class ViewMain {
 
             switch (menu) {
                 case 1:
-                    displayMenu(bookController, authorController, editorController, bookStoreController, reviewController,
-                            storeLocationController);
+                    displayMenu(bookController, authorController, editorController, bookStoreController, reviewController);
                     break;
                 case 2:
                     System.out.println("Author id for adding book: ");
@@ -169,19 +159,18 @@ public class ViewMain {
 
     public static void displayMenu(BookController bookController, AuthorController authorController,
                                    EditorController editorController, BookStoreController bookStoreController,
-                                   ReviewController reviewController, StoreLocationController storeLocationController) {
+                                   ReviewController reviewController) {
         int case1 = 0;
         Scanner displayMenu = new Scanner(System.in);
-        while (case1 != 9) {
+        while (case1 != 8) {
             System.out.println("1. Display Books");
             System.out.println("2. Display Authors");
             System.out.println("3. Display Bookstores");
             System.out.println("4. Display Editors");
             System.out.println("5. Display Reviews");
-            System.out.println("6. Display Store Locations");
-            System.out.println("7. Filtering");
-            System.out.println("8. Sorting");
-            System.out.println("9. Back");
+            System.out.println("6. Filtering");
+            System.out.println("7. Sorting");
+            System.out.println("8. Back");
 
             case1 = displayMenu.nextInt();
             switch (case1) {
@@ -207,13 +196,9 @@ public class ViewMain {
                     reviewController.displayAll();
                     break;
                 case 6:
-                    System.out.println("Store Locations: ");
-                    storeLocationController.displayAll();
-                    break;
-                case 7:
                     filterDisplays(bookController, authorController, editorController, bookStoreController, reviewController);
                     break;
-                case 8:
+                case 7:
                     sortedDisplays(bookController, authorController, editorController, bookStoreController, reviewController);
                     break;
 
@@ -231,13 +216,15 @@ public class ViewMain {
         int year = 0;
         String keyword;
         Scanner displayMenu = new Scanner(System.in);
-        while (case1 != 6) {
+        while (case1 != 8) {
             System.out.println("1. Display Books older than given year");
             System.out.println("2. Display Authors older than given year");
             System.out.println("3. Display books that contain a given keyword");
             System.out.println("4. Display review that contain a given keyword");
             System.out.println("5. Display Books from a certain author");
-            System.out.println("6. Back");
+            System.out.println("6. Display Books from a certain store");
+            System.out.println("7. Display Books from a certain editor");
+            System.out.println("8. Back");
             case1 = displayMenu.nextInt();
             displayMenu.nextLine();
             switch (case1) {
@@ -266,6 +253,24 @@ public class ViewMain {
                     System.out.println("Author name: ");
                     keyword = displayMenu.nextLine();
                     bookController.booksFromAuthor(keyword);
+                    break;
+                case 6:
+                    System.out.println("Store name: ");
+                    keyword = displayMenu.nextLine();
+                    try {
+                        bookStoreController.displayBooksForStore(keyword);
+                    } catch (BadValueException e) {
+                        System.out.println("Store does not exist");
+                    }
+                    break;
+                case 7:
+                    System.out.println("Editor name: ");
+                    keyword = displayMenu.nextLine();
+                    try {
+                        editorController.displayBooksForEditor(keyword);
+                    } catch (BadValueException e) {
+                        System.out.println("Editor does not exist");
+                    }
                     break;
             }
         }
@@ -321,14 +326,15 @@ public class ViewMain {
 
     public static void addMenu(Scanner adminMenu, BookController bookController, BookView bookView, AuthorController authorController,
                                AuthorView authorView, BookStoreView bookStoreView, EditorView editorView,
-                               BookStoreController bookStoreController, EditorController editorController) {
+                               BookStoreController bookStoreController, EditorController editorController
+    ) {
         int case6 = 0;
-        while (case6 != 5) {
+        while (case6 != 6) {
             System.out.println("1. Add Book");
             System.out.println("2. Add Author");
             System.out.println("3. Add BookStore");
-            System.out.println("4. Add Editors");
-            System.out.println("5. Back");
+            System.out.println("4. Add Editor");
+            System.out.println("6. Back");
             case6 = adminMenu.nextInt();
             switch (case6) {
                 case 1:
@@ -367,8 +373,8 @@ public class ViewMain {
 
     public static void criticMenu(UserController userController, BookController bookController, AuthorController authorController, BookStoreController
             bookStoreController, CriticController criticController, EditorController
-                                          editorController, ReviewController reviewController, StoreLocationController
-                                          storeLocationController, AdminController adminController, BookView bookView) throws BadValueException {
+                                          editorController, ReviewController reviewController
+            , AdminController adminController, BookView bookView) {
 
         Scanner criticMenu = new Scanner(System.in);
 
@@ -382,7 +388,7 @@ public class ViewMain {
             switch (cm) {
                 case 1:
                     displayMenu(bookController, authorController, editorController, bookStoreController,
-                            reviewController, storeLocationController);
+                            reviewController);
 
                 case 2:
                     System.out.println("Enter book id: ");
