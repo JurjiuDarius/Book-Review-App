@@ -33,16 +33,16 @@ public class AuthorServTest {
     }
 
     @Test
-
-    void addAuthorTest(){
+    void addAuthorTest() {
         Author author = Author.builder().name("stiu").build();
-        try{
+        try {
             authorService.add(author);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
     @Test
     void updateAuthorTest() {
         Author author = Author.builder().name("stiu").build();
@@ -56,7 +56,6 @@ public class AuthorServTest {
     }
 
     @Test
-
     void deleteByIdTest() {
         Author author = Author.builder().name("stiu").id(1).build();
         try {
@@ -69,7 +68,6 @@ public class AuthorServTest {
 
 
     @Test
-
     void findOlderThanTest() {
         Author author = Author.builder().name("stiu").id(1).birthYear(1990).build();
         Author author1 = Author.builder().name("stius").id(2).birthYear(1942).build();
@@ -78,29 +76,17 @@ public class AuthorServTest {
                 author1);
 
         int birthyear = 1945;
-        try{
+        try {
             authorService.authorsOlderThan(birthyear);
             assertTrue(authors.contains(author1));
 
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
 
-
-
     }
 
 
-
-
-
-
-
-
-
-
-
-
-    }
+}
 
