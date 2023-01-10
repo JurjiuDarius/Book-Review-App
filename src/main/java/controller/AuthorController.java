@@ -2,57 +2,65 @@ package controller;
 
 import entity.Author;
 import exception.BadValueException;
-import repository.Repository;
+import service.AuthorService;
 import view.AuthorView;
-
-import java.util.Optional;
 
 public class AuthorController {
 
-	private final Repository<Author> authorRepository;
-	private final AuthorView authorView;
+    private final AuthorService authorService;
+    private final AuthorView authorView;
 
-	public AuthorController(Repository<Author> repository, AuthorView authorView) {
-		this.authorRepository = repository;
-		this.authorView = authorView;
-	}
+    public AuthorController(AuthorService authorService, AuthorView authorView) {
+        this.authorService = authorService;
+        this.authorView = authorView;
+    }
 
-	public Author addAuthor(Author author) throws BadValueException {
-		if (author.getId() < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
+    public Author addAuthor(Author author) throws BadValueException {
+        if (author.getId() < 0) {
+            throw new BadValueException("Ids are positive numbers");
+        }
 
-		return authorRepository.add(author);
-	}
+        return authorService.add(author);
+    }
 
-	public Author updateAuthor(Author author) throws BadValueException {
-		if (author.getId() < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
-		return authorRepository.update(author);
-	}
+    public Author updateAuthor(Author author) throws BadValueException {
+        if (author.getId() < 0) {
+            throw new BadValueException("Ids are positive numbers");
+        }
+        return authorService.update(author);
+    }
 
-	public void deleteAuthorById(int id) throws BadValueException {
-		if (id < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
-		authorRepository.deleteById(id);
-	}
+    public void deleteAuthorById(int id) throws BadValueException {
+        if (id < 0) {
+            throw new BadValueException("Ids are positive numbers");
+        }
+        authorService.deleteById(id);
+    }
 
-	public void displayAll() {
+    public void displayAll() {
 
-		authorView.displayAuthors(authorRepository.findAll());
-	}
+        authorView.displayAuthors(authorService.findAll());
+    }
 
-	public void displayById(int id) throws BadValueException {
-		Optional<Author> authorOptional = authorRepository.findById(id);
-		if (id < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
-		if (!authorOptional.isEmpty()) {
-			authorView.displayAuthor(authorOptional.get());
-		}
-	}
+    public void displayById(int id) throws BadValueException {
+        authorView.displayAuthor(authorService.findById(id));
+    }
+
+    public void authorsOlderThan(int year) {
+        authorView.displayAuthors(authorService.authorsOlderThan(year));
+    }
+
+    public void authorsSortedByYear() {
+        authorView.displayAuthors(authorService.authorsSortedByYear());
+    }
+
+    public void authorsSortedByName() {
+        authorView.displayAuthors(authorService.authorsSortedByName());
+    }
+
+    public void authorsSortedByBooks() {
+        authorView.displayAuthors(authorService.authorsSortedByBooks());
+    }
 
 }
 

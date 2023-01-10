@@ -16,10 +16,12 @@ import java.util.List;
 @Table(name = "editor")
 public class Editor extends Identifiable {
 
-	@OneToMany(mappedBy = "editor", cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE})
-	private List<Book> books;
+    @OneToMany(mappedBy = "editor", cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE})
+    private List<Book> books;
 
-	@Column(name = "establishment_year")
-	private Integer establishmentYear;
+    @Column(name = "establishment_year")
+    private Integer establishmentYear;
+
+    private String name;
 
 }

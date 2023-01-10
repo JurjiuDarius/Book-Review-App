@@ -2,57 +2,58 @@ package controller;
 
 import entity.Editor;
 import exception.BadValueException;
-import repository.Repository;
+import service.EditorService;
+import view.BookView;
 import view.EditorView;
-
-import java.util.Optional;
 
 public class EditorController {
 
-	private final Repository<Editor> editorRepository;
-	private final EditorView editorView;
+    private final EditorService editorService;
+    private final EditorView editorView;
+    private final BookView bookView;
 
-	public EditorController(Repository<Editor> repository, EditorView editorView) {
-		this.editorRepository = repository;
-		this.editorView = editorView;
-	}
+    public EditorController(EditorService editorService, EditorView editorView, BookView bookView) {
+        this.editorService = editorService;
+        this.editorView = editorView;
+        this.bookView = bookView;
+    }
 
-	public Editor addEditor(Editor editor) throws BadValueException {
-		if (editor.getId() < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
+    public Editor addEditor(Editor editor) throws BadValueException {
+        if (editor.getId() < 0) {
+            throw new BadValueException("Ids are positive numbers");
+        }
 
-		return editorRepository.add(editor);
-	}
+        return editorService.add(editor);
+    }
 
-	public Editor updateEditor(Editor editor) throws BadValueException {
-		if (editor.getId() < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
-		return editorRepository.update(editor);
-	}
+    public Editor updateEditor(Editor editor) throws BadValueException {
+        if (editor.getId() < 0) {
+            throw new BadValueException("Ids are positive numbers");
+        }
+        return editorService.update(editor);
+    }
 
-	public void deleteEditorById(int id) throws BadValueException {
-		if (id < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
-		editorRepository.deleteById(id);
-	}
+    public void deleteEditorById(int id) throws BadValueException {
+        if (id < 0) {
+            throw new BadValueException("Ids are positive numbers");
+        }
+        editorService.deleteById(id);
+    }
 
-	public void displayAll() {
+    public void displayAll() {
+        editorView.displayEditors(editorService.findAll());
+    }
 
-		editorView.displayEditors(editorRepository.findAll());
-	}
+    public void displayById(int id) throws BadValueException {
 
-	public void displayById(int id) throws BadValueException {
-		Optional<Editor> editorOptional = editorRepository.findById(id);
-		if (id < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
-		if (!editorOptional.isEmpty()) {
-			editorView.displayEditor(editorOptional.get());
-		}
-	}
+        editorView.displayEditor(editorService.findById(id));
+
+    }
+
+    public void displayBooksForEditor(String name) throws BadValueException {
+        bookView.displayBooks(editorService.booksForEditor(name));
+    }
+
 
 }
 

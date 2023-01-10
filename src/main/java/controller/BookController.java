@@ -2,56 +2,73 @@ package controller;
 
 import entity.Book;
 import exception.BadValueException;
-import repository.Repository;
+import service.BookService;
 import view.BookView;
-
-import java.util.Optional;
 
 public class BookController {
 
-	private final Repository<Book> bookRepository;
-	private final BookView bookView;
+    private final BookService bookService;
+    private final BookView bookView;
 
-	public BookController(Repository<Book> repository, BookView bookView) {
-		this.bookRepository = repository;
-		this.bookView = bookView;
-	}
+    public BookController(BookService bookService, BookView bookView) {
+        this.bookService = bookService;
+        this.bookView = bookView;
+    }
 
-	public Book addBook(Book book) throws BadValueException {
-		if (book.id < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
+    public Book addBook(Book book) throws BadValueException {
+        if (book.getId() < 0) {
+            throw new BadValueException("Ids are positive numbers");
+        }
 
-		return bookRepository.add(book);
-	}
+        return bookService.add(book);
+    }
 
-	public Book updateBook(Book book) throws BadValueException {
-		if (book.id < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
-		return bookRepository.update(book);
-	}
+    public Book updateBook(Book book) throws BadValueException {
+        if (book.getId() < 0) {
+            throw new BadValueException("Ids are positive numbers");
+        }
+        return bookService.update(book);
+    }
 
-	public void deleteBookById(int id) throws BadValueException {
-		if (id < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
-		bookRepository.deleteById(id);
-	}
+    public void deleteBookById(int id) throws BadValueException {
+        if (id < 0) {
+            throw new BadValueException("Ids are positive numbers");
+        }
+        bookService.deleteById(id);
+    }
 
-	public void displayAll() {
+    public void displayAll() {
 
-		bookView.displayBooks(bookRepository.findAll());
-	}
+        bookView.displayBooks(bookService.findAll());
+    }
 
-	public void displayById(int id) throws BadValueException {
-		Optional<Book> bookOptional = bookRepository.findById(id);
-		if (id < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
-		if (!bookOptional.isEmpty()) {
-			bookView.displayBook(bookOptional.get());
-		}
-	}
+    public void displayById(int id) throws BadValueException {
 
+        bookView.displayBook(bookService.findById(id));
+    }
+
+    public void createBook() {
+        Book book = bookView.newBook();
+        bookService.add(book);
+    }
+
+    public void booksOlderThan(int year) {
+        bookView.displayBooks(bookService.booksOlderThan(year));
+    }
+
+    public void booksContainingKeyword(String keyword) {
+        bookView.displayBooks(bookService.booksContainingKeyword(keyword));
+    }
+
+    public void booksFromAuthor(String authorName) {
+        bookView.displayBooks(bookService.booksFromAuthor(authorName));
+    }
+
+    public void booksSortedByYear() {
+        bookView.displayBooks(bookService.booksSortedByYear());
+    }
+
+    public void booksSortedByName() {
+        bookView.displayBooks(bookService.booksSortedByName());
+    }
 }

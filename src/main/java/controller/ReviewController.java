@@ -2,57 +2,58 @@ package controller;
 
 import entity.Review;
 import exception.BadValueException;
-import repository.Repository;
+import service.ReviewService;
 import view.ReviewView;
-
-import java.util.Optional;
 
 public class ReviewController {
 
-	//comm
-	private final Repository<Review> reviewRepository;
-	private final ReviewView reviewView;
+    //comm
+    private final ReviewService reviewService;
+    private final ReviewView reviewView;
 
-	public ReviewController(Repository<Review> repository, ReviewView reviewView) {
-		this.reviewRepository = repository;
-		this.reviewView = reviewView;
-	}
+    public ReviewController(ReviewService reviewService, ReviewView reviewView) {
+        this.reviewService = reviewService;
+        this.reviewView = reviewView;
+    }
 
-	public Review addReview(Review review) throws BadValueException {
-		if (review.getId() < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
+    public Review addReview(Review review) throws BadValueException {
+        if (review.getId() < 0) {
+            throw new BadValueException("Ids are positive numbers");
+        }
 
-		return reviewRepository.add(review);
-	}
+        return reviewService.add(review);
+    }
 
-	public Review updateReview(Review review) throws BadValueException {
-		if (review.getId() < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
-		return reviewRepository.update(review);
-	}
+    public Review updateReview(Review review) throws BadValueException {
+        if (review.getId() < 0) {
+            throw new BadValueException("Ids are positive numbers");
+        }
+        return reviewService.update(review);
+    }
 
-	public void deleteReviewById(int id) throws BadValueException {
-		if (id < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
-		reviewRepository.deleteById(id);
-	}
+    public void deleteReviewById(int id) throws BadValueException {
+        if (id < 0) {
+            throw new BadValueException("Ids are positive numbers");
+        }
+        reviewService.deleteById(id);
+    }
 
-	public void displayAll() {
-		reviewView.displayReview((Review) reviewRepository.findAll());
+    public void displayAll() {
+        reviewView.displayReviews(reviewService.findAll());
+    }
 
-	}
+    public void displayById(int id) throws BadValueException {
 
-	public void displayById(int id) throws BadValueException {
-		Optional<Review> reviewOptional = reviewRepository.findById(id);
-		if (id < 0) {
-			throw new BadValueException("Ids are positive numbers");
-		}
-		if (!reviewOptional.isEmpty()) {
-			reviewView.displayReview(reviewOptional.get());
-		}
-	}
+        reviewView.displayReview(reviewService.findById(id));
+
+    }
+
+    public void reviewsOlderThan(int year) {
+        reviewView.displayReviews(reviewService.reviewsOlderThan(year));
+    }
+
+    public void reviewsContainingKeyword(String keyword) {
+        reviewView.displayReviews(reviewService.reviewsContainingKeyword(keyword));
+    }
 
 }
