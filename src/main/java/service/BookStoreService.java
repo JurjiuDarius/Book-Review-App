@@ -1,5 +1,4 @@
 package service;
-
 import entity.Book;
 import entity.BookStore;
 import exception.BadValueException;
@@ -43,5 +42,6 @@ public class BookStoreService {
         return bookStores.get(0).getBooks();
 
     }
+
 
 }

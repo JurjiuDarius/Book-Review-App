@@ -4,13 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @Data
-@ToString(exclude = "bookStores")
 @NoArgsConstructor
 @Entity
 @SuperBuilder
@@ -18,6 +16,10 @@ import java.util.List;
 @AllArgsConstructor
 public class Book extends Identifiable {
 
+    public int id;
+    public String name;
+    public String description;
+    public String type;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE})
     @JoinTable(
             name = "distribution_contract",
@@ -26,12 +28,10 @@ public class Book extends Identifiable {
             }
     )
     List<BookStore> bookStores;
+
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     List<Review> reviews;
-    private int id;
-    private String name;
-    private String description;
-    private String type;
+
     @ManyToOne()
     @JoinColumn(name = "author_id")
     private Author author;

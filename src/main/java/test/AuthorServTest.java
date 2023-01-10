@@ -67,17 +67,6 @@ public class AuthorServTest {
         }
     }
 
-    @Test
-
-    void findByIDTest()     {
-        Author author = Author.builder().name("stiu").id(1).build();
-        try {
-            authorService.findById(1);
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Test
 

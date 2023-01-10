@@ -24,8 +24,6 @@ public class AdminServiceTest {
     @Mock
     private Repository<BookStore> bookStoreRepository;
     @Mock
-    private Repository<StoreLocation> storeLocationRepository;
-    @Mock
     private Repository<Book> bookRepository;
     @Mock
     private Repository<Editor> editorRepository;
@@ -35,7 +33,7 @@ public class AdminServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        adminService = new AdminService(authenticationService, authorRepository, storeLocationRepository, bookStoreRepository, bookRepository, editorRepository);
+        adminService = new AdminService(authenticationService, authorRepository, bookStoreRepository, bookRepository, editorRepository);
 
     }
 

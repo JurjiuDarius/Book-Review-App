@@ -1,9 +1,6 @@
 package service;
 
-import entity.Author;
-import entity.Book;
-import entity.BookStore;
-import entity.Editor;
+import entity.*;
 import lombok.AllArgsConstructor;
 import repository.Repository;
 
@@ -51,9 +48,14 @@ public class AdminService {
     public void addBookToEditor(Integer bookId, Integer editorId) {
         Editor editor = editorRepository.findById(editorId).get();
         Book book = bookRepository.findById(bookId).get();
-        book.setEditor(editor);
-        bookRepository.update(book);
+        if (editor.getBooks() == null) {
+            editor.setBooks(new ArrayList<>());
+        }
+        editor.getBooks().add(book);
+        editorRepository.update(editor);
 
     }
-//2
+
 }
+
+
