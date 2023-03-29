@@ -1,3 +1,5 @@
 # BookReviewApp
+An app meant as an exercise for working with hibernate on a lower level, as well as properly structuring business logic.
 
-An app for reviewing apps. It is also possible to add books and view locations where the books can be bought.
+This is a college project me and a fellow student worked on for a course.
+
