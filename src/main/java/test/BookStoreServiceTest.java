@@ -24,35 +24,34 @@ public class BookStoreServiceTest {
     }
 
     @Test
-
-    void addBookStoreTest(){
+    void addBookStoreTest() {
         BookStore bookStore = BookStore.builder().id(2).build();
 
         try {
             bookStoreService.add(bookStore);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
     }
 
     @Test
-    void deleteBookStoreTest(){
+    void deleteBookStoreTest() {
         BookStore bookStore = BookStore.builder().id(2).build();
         try {
             bookStoreService.deleteById(bookStore.getId());
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
     }
 
     @Test
-    void updateBookStoreTest(){
+    void updateBookStoreTest() {
         BookStore bookStore = BookStore.builder().id(2).build();
         try {
             bookStoreService.update(bookStore);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 

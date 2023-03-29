@@ -1,22 +1,16 @@
 package test;
 
-import entity.*;
-import exception.EntityNotFoundException;
+import entity.Author;
+import entity.Book;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import repository.Repository;
-import service.AdminService;
-import service.AuthenticationService;
-import service.AuthorService;
 import service.BookService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class BookServiceTest {
 
@@ -79,7 +73,7 @@ public class BookServiceTest {
         int py = 1945;
         try {
             bookService.booksOlderThan(py);
-            assertTrue(bookList.contains(book1));
+            assert (bookList.contains(book1));
 
         } catch (Exception e) {
             throw new NoSuchElementException(e);
@@ -90,7 +84,7 @@ public class BookServiceTest {
 
 
     @Test
-    void bookAuthTest(){
+    void bookAuthTest() {
         Author author = Author.builder().name("Miau").build();
         Author author1 = Author.builder().name("Ham").build();
         Book book = Book.builder().author(author).build();
@@ -100,7 +94,7 @@ public class BookServiceTest {
                 book1
         );
 
-        try{
+        try {
             bookService.booksFromAuthor("Ham");
 
         } catch (Exception e) {

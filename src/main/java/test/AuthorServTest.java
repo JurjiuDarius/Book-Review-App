@@ -1,20 +1,15 @@
 package test;
 
-import entity.*;
-import org.checkerframework.checker.units.qual.A;
+import entity.Author;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import repository.Repository;
-import service.AdminService;
-import service.AuthenticationService;
 import service.AuthorService;
 
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class AuthorServTest {
 
@@ -78,7 +73,7 @@ public class AuthorServTest {
         int birthyear = 1945;
         try {
             authorService.authorsOlderThan(birthyear);
-            assertTrue(authors.contains(author1));
+            assert (authors.contains(author1));
 
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -1,6 +1,9 @@
 package service;
 
-import entity.*;
+import entity.Author;
+import entity.Book;
+import entity.BookStore;
+import entity.Editor;
 import lombok.AllArgsConstructor;
 import repository.Repository;
 

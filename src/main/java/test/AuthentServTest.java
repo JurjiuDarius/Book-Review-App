@@ -1,12 +1,11 @@
 package test;
 
-import entity.*;
+import entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import repository.Repository;
-import service.AdminService;
 import service.AuthenticationService;
 
 public class AuthentServTest {

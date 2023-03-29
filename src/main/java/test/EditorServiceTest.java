@@ -1,7 +1,6 @@
 package test;
 
 import entity.Editor;
-import entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -25,35 +24,34 @@ public class EditorServiceTest {
     }
 
     @Test
-
-    void addEditorTest(){
+    void addEditorTest() {
         Editor editor = Editor.builder().id(2).build();
 
         try {
             editorService.add(editor);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
     }
 
     @Test
-    void deleteEditorTest(){
+    void deleteEditorTest() {
         Editor editor = Editor.builder().id(2).build();
         try {
             editorService.deleteById(editor.getId());
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
     }
 
     @Test
-    void updateEditorTest(){
+    void updateEditorTest() {
         Editor editor = Editor.builder().id(2).build();
         try {
             editorService.update(editor);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 

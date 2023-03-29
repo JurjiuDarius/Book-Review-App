@@ -24,35 +24,34 @@ public class ReviewServiceTest {
     }
 
     @Test
-
-    void addReviewTest(){
+    void addReviewTest() {
         Review review = Review.builder().id(2).build();
 
         try {
             reviewService.add(review);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
     }
 
     @Test
-    void deleteReviewTest(){
+    void deleteReviewTest() {
         Review review = Review.builder().id(2).build();
         try {
             reviewService.deleteById(review.getId());
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
     }
 
     @Test
-    void updateReviewTest(){
+    void updateReviewTest() {
         Review review = Review.builder().id(2).build();
         try {
             reviewService.update(review);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
